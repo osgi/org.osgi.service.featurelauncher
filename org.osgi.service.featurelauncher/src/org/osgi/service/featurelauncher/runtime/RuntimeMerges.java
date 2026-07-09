@@ -111,7 +111,7 @@ public final class RuntimeMerges {
 										i == ib ? Stream.of(feature.getID())
 												: Stream.empty())
 										.collect(Collectors.toList())))
-						.filter(bm -> bm.owningFeatures.isEmpty());
+						.filter(bm -> !bm.owningFeatures.isEmpty());
 				return unchanged;
 			} else {
 				// This should be impossible, fall back to installing toMerge
@@ -171,6 +171,9 @@ public final class RuntimeMerges {
 				// This is the final part of the version
 				try {
 					versions[i] = Integer.parseInt(version.substring(from));
+					// The whole remainder was a number, so there is no
+					// qualifier
+					from = version.length();
 				} catch (NumberFormatException nfe) {
 					// Not a number, leave it for the qualifier
 				}
@@ -207,6 +210,11 @@ public final class RuntimeMerges {
 				existingFeatureConfigurations) -> {
 
 			if (operation == MergeOperationType.REMOVE) {
+				// No remaining feature contributes this configuration, so it
+				// should be deleted.
+				if (existingFeatureConfigurations.isEmpty()) {
+					return null;
+				}
 				// Find the latest Feature and use those properties
 				ListIterator<FeatureConfigurationDefinition> it = existingFeatureConfigurations
 						.listIterator(existingFeatureConfigurations.size() - 1);

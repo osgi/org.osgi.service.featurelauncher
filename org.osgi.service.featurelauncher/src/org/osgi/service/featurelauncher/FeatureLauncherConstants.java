@@ -95,7 +95,9 @@ public final class FeatureLauncherConstants {
 	/**
 	 * The name of the metadata property used to indicate the start level of the
 	 * bundle to be installed. The value must be an integer between
-	 * <code>0</code> and {@link Integer#MAX_VALUE}.
+	 * <code>1</code> and {@link Integer#MAX_VALUE} inclusive. The value
+	 * <code>0</code> is reserved by the OSGi framework for the System Bundle and
+	 * is not a valid bundle start level.
 	 */
 	public static final String	BUNDLE_START_LEVEL_METADATA						= "bundleStartLevel";
 
