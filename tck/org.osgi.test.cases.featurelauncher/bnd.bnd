@@ -1,0 +1,44 @@
+# Set javac settings from JDT prefs
+
+-conditionalpackage					= org.osgi.test.support.*
+-privatepackage						=  \
+	${p}.*
+Import-Package: ${-signaturetest}, *
+
+# SPI-Fly ServiceLoader consumer requirements: the TCK obtains these types via
+# java.util.ServiceLoader.load(...), so the OSGi Service Loader Mediator must
+# weave those calls. effective:=active keeps them out of bundle resolution.
+Require-Capability: \
+	osgi.serviceloader;cardinality:=multiple;effective:=active;filter:="(osgi.serviceloader=org.osgi.service.featurelauncher.FeatureLauncher)", \
+	osgi.serviceloader;cardinality:=multiple;effective:=active;filter:="(osgi.serviceloader=org.osgi.service.featurelauncher.repository.ArtifactRepositoryFactory)"
+
+# Test bundles are built on demand from bnd/<name>.bnd (cnf Make recipe) and
+# embedded at the bundle root; tests load them via getResourceAsStream("/<name>.jar").
+# tb1-3: minimal no-op bundles. tb4: fails on start. tbmv1/tbmv2: same symbolic
+# name at versions 1.0.0/1.1.0 for bundle-merge tests.
+-includeresource					= \
+	tb1.jar, \
+	tb2.jar, \
+	tb3.jar, \
+	tb4.jar, \
+	tbmv1.jar, \
+	tbmv2.jar
+
+
+
+
+-signaturetest                      = org.osgi.service.featurelauncher
+
+p: org.osgi.test.cases.featurelauncher
+
+# Maven build: workspace includes replaced inline (from cnf/includes and build.bnd in osgi/osgi)
+# -make.maven, not -make: the key is a map entry and would displace
+# a project-level -make (webcontainer also builds .war recipes this
+# way). bnd merges all -make.* entries.
+-make.maven: (*).(jar); type=bnd; recipe="bnd/$1.bnd"
+
+testcases.junit3: ${classes;EXTENDS;junit.framework.TestCase;CONCRETE}
+testcases.junit4: ${classes;HIERARCHY_ANNOTATED;org.junit.Test;CONCRETE}
+testcases.junit5: ${classes;HIERARCHY_INDIRECTLY_ANNOTATED;org.junit.platform.commons.annotation.Testable;CONCRETE}
+Test-Cases: ${sort;${uniq;${testcases.junit3};${testcases.junit4};${testcases.junit5}}}
+-plugin.signaturetest: SignatureTest
