@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.osgi</groupId>
+  <artifactId>org.osgi.service.featurelauncher.reactor</artifactId>
+  <version>1.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <description>OSGi Specification repo for org.osgi.service.featurelauncher</description>
+  <url>https://projects.eclipse.org/projects/technology.osgi/org.osgi.service.featurelauncher.reactor</url>
+  <organization>
+    <name>Eclipse Foundation</name>
+    <url>https://www.eclipse.org/</url>
+  </organization>
+  <licenses>
+    <license>
+      <name>Apache-2.0</name>
+      <url>https://opensource.org/licenses/Apache-2.0</url>
+      <distribution>repo</distribution>
+      <comments>Apache License, Version 2.0</comments>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>timothyjward</id>
+      <name>Tim Ward</name>
+      <email>timothyjward@apache.org</email>
+    </developer>
+    <developer>
+      <id>StefanBischof</id>
+      <name>Stefan Bischof</name>
+      <email>stbischof@bipolis.org</email>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git:https://github.com/osgi/org.osgi.service.featurelauncher.reactor</connection>
+    <developerConnection>scm:git:git@github.com:osgi/org.osgi.service.featurelauncher.reactor</developerConnection>
+    <url>https://github.com/osgi/org.osgi.service.featurelauncher.reactor</url>
+  </scm>
+  <issueManagement>
+    <system>GitHub Issues</system>
+    <url>https://github.com/osgi/osgi/issues</url>
+  </issueManagement>
+  <distributionManagement>
+    <snapshotRepository>
+      <id>central</id>
+      <url>https://central.sonatype.com/repository/maven-snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
+  <repositories>
+    <repository>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <id>central-snapshots</id>
+      <name>Central Snapshots</name>
+      <url>https://central.sonatype.com/repository/maven-snapshots/</url>
+    </repository>
+    <repository>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <id>ossrh</id>
+      <name>Sonatype Nexus Snapshots</name>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </repository>
+    <repository>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <id>apache-snapshots</id>
+      <name>Apache Snapshots</name>
+      <url>https://repository.apache.org/snapshots/</url>
+    </repository>
+  </repositories>
+</project>
