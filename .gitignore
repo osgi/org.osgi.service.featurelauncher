@@ -5,3 +5,4 @@ generated/
 .classpath
 .project
 .settings/
+.flattened-pom.xml
