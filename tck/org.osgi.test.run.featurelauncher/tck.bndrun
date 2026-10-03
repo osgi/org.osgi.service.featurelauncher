@@ -23,67 +23,87 @@
     order=sortbynameversion,\
     begin=-1
 
+# Test runtime versions: the Maven properties of tck/pom.xml, as the OSGi
+# range [x.y.z,x.y.z+1). version_cleanup turns 1.4.0-SNAPSHOT into 1.4.0.SNAPSHOT.
+tck.range: ${range;[===,==+);${version_cleanup;${1}}}
+
 -runrequires: \
-	bnd.identity;id='org.osgi.test.cases.featurelauncher',\
-	bnd.identity;id='org.apache.felix.configadmin',\
-	bnd.identity;id='org.apache.felix.scr',\
-	bnd.identity;id='org.apache.aries.spifly.dynamic.bundle',\
-	bnd.identity;id='org.apache.aries.util',\
-	bnd.identity;id='org.objectweb.asm.all',\
-	bnd.identity;id='org.eclipse.osgi-technology.featurelauncher.runtime',\
-	bnd.identity;id='org.eclipse.osgi-technology.featurelauncher.repository.artifact.maven',\
-	bnd.identity;id='org.eclipse.osgi-technology.featurelauncher.repository.common.osgi',\
-	bnd.identity;id='org.eclipse.osgi-technology.featurelauncher.repository.spi',\
-	bnd.identity;id='org.eclipse.osgi-technology.featurelauncher.featureservice.featureservice',\
-	bnd.identity;id='org.glassfish.jakarta.json',\
-	bnd.identity;id='com.grack.nanojson',\
-	bnd.identity;id='slf4j.api',\
-	bnd.identity;id='slf4j.simple',\
-	bnd.identity;id='assertj-core';version='[3.23.1,3.23.2)',\
-	bnd.identity;id='junit-jupiter-api';version='[5.8.2,5.8.3)',\
-	bnd.identity;id='junit-jupiter-engine';version='[5.8.2,5.8.3)',\
-	bnd.identity;id='junit-jupiter-params';version='[5.8.2,5.8.3)',\
-	bnd.identity;id='junit-platform-commons';version='[1.8.2,1.8.3)',\
-	bnd.identity;id='junit-platform-engine';version='[1.8.2,1.8.3)',\
-	bnd.identity;id='junit-platform-launcher';version='[1.8.2,1.8.3)',\
-	bnd.identity;id='junit-vintage-engine';version='[5.8.2,5.8.3)',\
-	bnd.identity;id='org.hamcrest';version='[2.2.0,2.2.1)',\
-	bnd.identity;id='org.awaitility';version='[4.2.0,4.2.1)',\
+	bnd.identity;id='org.osgi.test.cases.featurelauncher';version='${tck.range;${revision}}',\
+	bnd.identity;id='org.apache.felix.configadmin';version='${tck.range;${org.apache.felix.configadmin.version}}',\
+	bnd.identity;id='org.apache.felix.scr';version='${tck.range;${org.apache.felix.scr.version}}',\
+	bnd.identity;id='org.apache.aries.spifly.dynamic.bundle';version='${tck.range;${org.apache.aries.spifly.dynamic.bundle.version}}',\
+	bnd.identity;id='org.apache.aries.util';version='${tck.range;${org.apache.aries.util.version}}',\
+	bnd.identity;id='org.objectweb.asm.all';version='${tck.range;${asm-all.version}}',\
+	bnd.identity;id='org.eclipse.osgi-technology.featurelauncher.runtime';version='${tck.range;${runtime.version}}',\
+	bnd.identity;id='org.eclipse.osgi-technology.featurelauncher.repository.artifact.maven';version='${tck.range;${artifact.maven.version}}',\
+	bnd.identity;id='org.eclipse.osgi-technology.featurelauncher.repository.common.osgi';version='${tck.range;${common.osgi.version}}',\
+	bnd.identity;id='org.eclipse.osgi-technology.featurelauncher.repository.spi';version='${tck.range;${spi.version}}',\
+	bnd.identity;id='org.eclipse.osgi-technology.featurelauncher.featureservice.featureservice';version='${tck.range;${featureservice.version}}',\
+	bnd.identity;id='org.glassfish.jakarta.json';version='${tck.range;${jakarta.json.version}}',\
+	bnd.identity;id='com.grack.nanojson';version='${tck.range;${nanojson.version}}',\
+	bnd.identity;id='slf4j.api';version='${tck.range;${slf4j.version}}',\
+	bnd.identity;id='slf4j.simple';version='${tck.range;${slf4j.version}}',\
+	bnd.identity;id='assertj-core';version='${tck.range;${assertj.version}}',\
+	bnd.identity;id='junit-jupiter-api';version='${tck.range;${junit-jupiter.version}}',\
+	bnd.identity;id='junit-jupiter-engine';version='${tck.range;${junit-jupiter.version}}',\
+	bnd.identity;id='junit-jupiter-params';version='${tck.range;${junit-jupiter.version}}',\
+	bnd.identity;id='junit-platform-commons';version='${tck.range;${junit-platform.version}}',\
+	bnd.identity;id='junit-platform-engine';version='${tck.range;${junit-platform.version}}',\
+	bnd.identity;id='junit-platform-launcher';version='${tck.range;${junit-platform.version}}',\
+	bnd.identity;id='junit-vintage-engine';version='${tck.range;${junit-jupiter.version}}',\
+	bnd.identity;id='org.hamcrest';version='${tck.range;${hamcrest.version}}',\
+	bnd.identity;id='org.awaitility';version='${tck.range;${awaitility.version}}',\
 	bnd.identity;id='org.apache.servicemix.bundles.junit';version='[4.13.2.1,4.13.2.2)',\
-	bnd.identity;id='org.opentest4j';version='[1.2.0,1.2.1)',\
-	bnd.identity;id='org.osgi.test.common';version='[1.2.0,1.2.1)',\
-	bnd.identity;id='org.osgi.test.assertj.framework';version='[1.2.0,1.2.1)',\
-	bnd.identity;id='org.osgi.test.junit5';version='[1.2.0,1.2.1)',\
-	bnd.identity;id='org.osgi.test.junit4';version='[1.2.0,1.2.1)',\
-	bnd.identity;id='org.mockito.mockito-core';version='[4.6.1,4.6.2)',\
-	bnd.identity;id='net.bytebuddy.byte-buddy';version='[1.12.10,1.12.11)',\
-	bnd.identity;id='net.bytebuddy.byte-buddy-agent';version='[1.12.10,1.12.11)',\
-	bnd.identity;id='org.objenesis'
+	bnd.identity;id='org.opentest4j';version='${tck.range;${opentest4j.version}}',\
+	bnd.identity;id='org.osgi.test.common';version='${tck.range;${osgi-test.version}}',\
+	bnd.identity;id='org.osgi.test.assertj.framework';version='${tck.range;${osgi-test.version}}',\
+	bnd.identity;id='org.osgi.test.junit5';version='${tck.range;${osgi-test.version}}',\
+	bnd.identity;id='org.osgi.test.junit4';version='${tck.range;${osgi-test.version}}',\
+	bnd.identity;id='org.mockito.mockito-core';version='${tck.range;${mockito.version}}',\
+	bnd.identity;id='net.bytebuddy.byte-buddy';version='${tck.range;${byte-buddy.version}}',\
+	bnd.identity;id='net.bytebuddy.byte-buddy-agent';version='${tck.range;${byte-buddy.version}}',\
+	bnd.identity;id='org.objenesis';version='${tck.range;${objenesis.version}}'
 
-# Test infrastructure for the junit-platform tester — mirrors the original
-# cnf/repo/osgi.tck.junit-platform lib that every TCK run carried
--runbundles.tck: \
-	assertj-core;version='[3.23.1,3.23.2)',\
-	junit-jupiter-api;version='[5.8.2,5.8.3)',\
-	junit-jupiter-engine;version='[5.8.2,5.8.3)',\
-	junit-jupiter-params;version='[5.8.2,5.8.3)',\
-	junit-platform-commons;version='[1.8.2,1.8.3)',\
-	junit-platform-engine;version='[1.8.2,1.8.3)',\
-	junit-platform-launcher;version='[1.8.2,1.8.3)',\
-	junit-vintage-engine;version='[5.8.2,5.8.3)',\
-	org.hamcrest;version='[2.2.0,2.2.1)',\
-	org.awaitility;version='[4.2.0,4.2.1)',\
-	org.apache.servicemix.bundles.junit;version='[4.13.2.1,4.13.2.2)',\
-	org.opentest4j;version='[1.2.0,1.2.1)',\
-	org.osgi.test.common;version='[1.2.0,1.2.1)',\
-	org.osgi.test.assertj.framework;version='[1.2.0,1.2.1)',\
-	org.osgi.test.junit5;version='[1.2.0,1.2.1)',\
-	org.osgi.test.junit4;version='[1.2.0,1.2.1)',\
-	org.mockito.mockito-core;version='[4.6.1,4.6.2)',\
-	net.bytebuddy.byte-buddy;version='[1.12.10,1.12.11)',\
-	net.bytebuddy.byte-buddy-agent;version='[1.12.10,1.12.11)',\
-	org.objenesis
-
-
-# -runbundles is calculated by the bnd-resolver-maven-plugin during the run
--runbundles:
+# -runbundles is committed and verified by the build; after a dependency
+# change update it with: mvn bnd-resolver:resolve
+-runbundles: \
+	assertj-core;version='${tck.range;${assertj.version}}',\
+	com.grack.nanojson;version='${tck.range;${nanojson.version}}',\
+	junit-jupiter-api;version='${tck.range;${junit-jupiter.version}}',\
+	junit-jupiter-engine;version='${tck.range;${junit-jupiter.version}}',\
+	junit-jupiter-params;version='${tck.range;${junit-jupiter.version}}',\
+	junit-platform-commons;version='${tck.range;${junit-platform.version}}',\
+	junit-platform-engine;version='${tck.range;${junit-platform.version}}',\
+	junit-platform-launcher;version='${tck.range;${junit-platform.version}}',\
+	junit-vintage-engine;version='${tck.range;${junit-jupiter.version}}',\
+	net.bytebuddy.byte-buddy;version='${tck.range;${byte-buddy.version}}',\
+	net.bytebuddy.byte-buddy-agent;version='${tck.range;${byte-buddy.version}}',\
+	org.apache.aries.spifly.dynamic.bundle;version='${tck.range;${org.apache.aries.spifly.dynamic.bundle.version}}',\
+	org.apache.aries.util;version='${tck.range;${org.apache.aries.util.version}}',\
+	org.apache.felix.configadmin;version='${tck.range;${org.apache.felix.configadmin.version}}',\
+	org.apache.felix.scr;version='${tck.range;${org.apache.felix.scr.version}}',\
+	org.apache.servicemix.bundles.junit;version='${tck.range;${servicemix-junit.version}}',\
+	org.awaitility;version='${tck.range;${awaitility.version}}',\
+	org.eclipse.osgi-technology.featurelauncher.featureservice.featureservice;version='${tck.range;${featureservice.version}}',\
+	org.eclipse.osgi-technology.featurelauncher.repository.artifact.maven;version='${tck.range;${artifact.maven.version}}',\
+	org.eclipse.osgi-technology.featurelauncher.repository.common.osgi;version='${tck.range;${common.osgi.version}}',\
+	org.eclipse.osgi-technology.featurelauncher.repository.spi;version='${tck.range;${spi.version}}',\
+	org.eclipse.osgi-technology.featurelauncher.runtime;version='${tck.range;${runtime.version}}',\
+	org.glassfish.jakarta.json;version='${tck.range;${jakarta.json.version}}',\
+	org.hamcrest;version='${tck.range;${hamcrest.version}}',\
+	org.mockito.mockito-core;version='${tck.range;${mockito.version}}',\
+	org.objectweb.asm.all;version='${tck.range;${asm-all.version}}',\
+	org.objenesis;version='${tck.range;${objenesis.version}}',\
+	org.opentest4j;version='${tck.range;${opentest4j.version}}',\
+	org.osgi.service.component;version='${tck.range;${org.osgi.service.component.version}}',\
+	org.osgi.service.feature;version='${tck.range;${org.osgi.service.feature.version}}',\
+	org.osgi.service.featurelauncher;version='${tck.range;${revision}}',\
+	org.osgi.test.assertj.framework;version='${tck.range;${osgi-test.version}}',\
+	org.osgi.test.cases.featurelauncher;version='${tck.range;${revision}}',\
+	org.osgi.test.common;version='${tck.range;${osgi-test.version}}',\
+	org.osgi.test.junit4;version='${tck.range;${osgi-test.version}}',\
+	org.osgi.test.junit5;version='${tck.range;${osgi-test.version}}',\
+	org.osgi.util.function;version='${tck.range;${org.osgi.util.function.version}}',\
+	org.osgi.util.promise;version='${tck.range;${org.osgi.util.promise.version}}',\
+	slf4j.api;version='${tck.range;${slf4j.version}}',\
+	slf4j.simple;version='${tck.range;${slf4j.version}}'

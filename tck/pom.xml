@@ -12,6 +12,41 @@
 	<artifactId>org.osgi.tck.service.featurelauncher</artifactId>
 	<packaging>pom</packaging>
 
+	<properties>
+		<artifact.maven.version>1.0.0-SNAPSHOT</artifact.maven.version>
+		<asm-all.version>5.0.4</asm-all.version>
+		<assertj.version>3.23.1</assertj.version>
+		<awaitility.version>4.2.0</awaitility.version>
+		<byte-buddy.version>1.12.10</byte-buddy.version>
+		<common.osgi.version>1.0.0-SNAPSHOT</common.osgi.version>
+		<featureservice.version>1.0.0-SNAPSHOT</featureservice.version>
+		<hamcrest.version>2.2</hamcrest.version>
+		<jakarta.json.version>2.0.1</jakarta.json.version>
+		<junit-jupiter.version>5.12.2</junit-jupiter.version>
+		<junit-platform.version>1.12.2</junit-platform.version>
+		<mockito.version>4.6.1</mockito.version>
+		<nanojson.version>1.10</nanojson.version>
+		<objenesis.version>3.2</objenesis.version>
+		<opentest4j.version>1.3.0</opentest4j.version>
+		<org.apache.aries.spifly.dynamic.bundle.version>1.0.8</org.apache.aries.spifly.dynamic.bundle.version>
+		<org.apache.aries.util.version>1.1.3</org.apache.aries.util.version>
+		<org.apache.felix.configadmin.version>1.9.26</org.apache.felix.configadmin.version>
+		<org.apache.felix.scr.version>2.2.10</org.apache.felix.scr.version>
+		<org.eclipse.osgi.version>3.18.100</org.eclipse.osgi.version>
+		<org.osgi.framework.version>1.10.0</org.osgi.framework.version>
+		<org.osgi.namespace.service.version>1.0.0</org.osgi.namespace.service.version>
+		<org.osgi.resource.version>1.0.1</org.osgi.resource.version>
+		<org.osgi.service.component.version>1.5.1</org.osgi.service.component.version>
+		<org.osgi.service.feature.version>1.0.0</org.osgi.service.feature.version>
+		<org.osgi.util.function.version>1.2.0</org.osgi.util.function.version>
+		<org.osgi.util.promise.version>1.3.0</org.osgi.util.promise.version>
+		<osgi-test.version>1.2.0</osgi-test.version>
+		<runtime.version>1.0.0-SNAPSHOT</runtime.version>
+		<servicemix-junit.version>4.13.2_1</servicemix-junit.version>
+		<slf4j.version>2.0.11</slf4j.version>
+		<spi.version>1.0.0-SNAPSHOT</spi.version>
+	</properties>
+
 	<modules>
 		<module>org.osgi.test.cases.featurelauncher</module>
 		<module>org.osgi.test.run.featurelauncher</module>
