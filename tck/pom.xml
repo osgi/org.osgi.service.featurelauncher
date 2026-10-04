@@ -17,7 +17,7 @@
 		<asm-all.version>5.0.4</asm-all.version>
 		<assertj.version>3.27.7</assertj.version>
 		<awaitility.version>4.3.0</awaitility.version>
-		<byte-buddy.version>1.12.10</byte-buddy.version>
+		<byte-buddy.version>1.18.14</byte-buddy.version>
 		<common.osgi.version>1.0.0-SNAPSHOT</common.osgi.version>
 		<featureservice.version>1.0.0-SNAPSHOT</featureservice.version>
 		<hamcrest.version>2.2</hamcrest.version>
