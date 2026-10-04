@@ -15,7 +15,7 @@
 	<properties>
 		<artifact.maven.version>1.0.0-SNAPSHOT</artifact.maven.version>
 		<asm-all.version>5.0.4</asm-all.version>
-		<assertj.version>3.23.1</assertj.version>
+		<assertj.version>3.27.7</assertj.version>
 		<awaitility.version>4.3.0</awaitility.version>
 		<byte-buddy.version>1.12.10</byte-buddy.version>
 		<common.osgi.version>1.0.0-SNAPSHOT</common.osgi.version>
