@@ -19,6 +19,8 @@
 package org.osgi.test.cases.featurelauncher.junit;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.osgi.test.assertj.bundle.BundleAssert.assertThat;
 import static org.osgi.test.cases.featurelauncher.junit.TckTestHelper.mapOf;
 
 import java.io.IOException;
@@ -118,7 +120,7 @@ public class RuntimeRemoveTest {
 			runtime.remove(featureId);
 
 			// After removal, bundle should not be ACTIVE
-			assertThat(bundle.getState()).isNotEqualTo(Bundle.ACTIVE);
+			assertThat(bundle).isNotInState(Bundle.ACTIVE);
 		}
 
 		@Test
@@ -167,7 +169,7 @@ public class RuntimeRemoveTest {
 
 			runtime.remove(featureId);
 
-			assertThat(bundle.getState()).isEqualTo(Bundle.UNINSTALLED);
+			assertThat(bundle).isInState(Bundle.UNINSTALLED);
 		}
 
 		@Test
@@ -192,7 +194,7 @@ public class RuntimeRemoveTest {
 
 			// All bundles should be stopped (either RESOLVED or UNINSTALLED)
 			for (Bundle b : bundles) {
-				assertThat(b.getState()).isNotEqualTo(Bundle.ACTIVE);
+				assertThat(b).isNotInState(Bundle.ACTIVE);
 			}
 		}
 
@@ -216,7 +218,7 @@ public class RuntimeRemoveTest {
 			runtime.remove(featureId);
 
 			for (Bundle b : bundles) {
-				assertThat(b.getState()).isNotEqualTo(Bundle.ACTIVE);
+				assertThat(b).isNotInState(Bundle.ACTIVE);
 			}
 		}
 
@@ -268,7 +270,7 @@ public class RuntimeRemoveTest {
 
 			// All bundles should be uninstalled
 			for (Bundle b : bundles) {
-				assertThat(b.getState()).isEqualTo(Bundle.UNINSTALLED);
+				assertThat(b).isInState(Bundle.UNINSTALLED);
 			}
 		}
 
@@ -288,7 +290,7 @@ public class RuntimeRemoveTest {
 			runtime.remove(featureId);
 
 			// After removal and refresh, the bundle should be uninstalled
-			assertThat(bundle.getState()).isEqualTo(Bundle.UNINSTALLED);
+			assertThat(bundle).isInState(Bundle.UNINSTALLED);
 
 			// Verify no dangling bundles reference the removed BSN
 			String bsn = bundle.getSymbolicName();
@@ -299,8 +301,7 @@ public class RuntimeRemoveTest {
 							&& b.getState() != Bundle.UNINSTALLED) {
 						// If a same-BSN bundle exists, it should be properly
 						// wired (refresh was called)
-						assertThat(b.getState()).isIn(Bundle.INSTALLED,
-								Bundle.RESOLVED, Bundle.ACTIVE);
+						assertThat(b).isInStateMaskedBy(Bundle.INSTALLED | Bundle.RESOLVED | Bundle.ACTIVE);
 					}
 				}
 			}
@@ -393,8 +394,7 @@ public class RuntimeRemoveTest {
 
 			// Shared bundle should still be installed (owned by feature2)
 			if (sharedBundle != null) {
-				assertThat(sharedBundle.getState())
-						.isNotEqualTo(Bundle.UNINSTALLED);
+				assertThat(sharedBundle).isNotInState(Bundle.UNINSTALLED);
 			}
 
 			// Now remove second feature
@@ -402,8 +402,7 @@ public class RuntimeRemoveTest {
 
 			// Now the shared bundle should be uninstalled
 			if (sharedBundle != null) {
-				assertThat(sharedBundle.getState())
-						.isEqualTo(Bundle.UNINSTALLED);
+				assertThat(sharedBundle).isInState(Bundle.UNINSTALLED);
 			}
 		}
 
@@ -441,7 +440,7 @@ public class RuntimeRemoveTest {
 				// Shared config should still exist
 				Configuration[] configs = cm
 						.listConfigurations("(service.pid=" + sharedPid + ")");
-				assertThat(configs).isNotNull().isNotEmpty();
+				assertThat(configs).isNotEmpty();
 
 				// Remove second feature
 				runtime.remove(installed2.getFeature().getID());
@@ -522,7 +521,7 @@ public class RuntimeRemoveTest {
 
 			// After removal, framework start level should be >= 0
 			// and should reflect remaining installed features
-			assertThat(slAfter).isGreaterThan(0);
+			assertThat(slAfter).isPositive();
 			// If no other features remain, start level may be reduced
 			assertThat(slAfter).isLessThanOrEqualTo(slBefore);
 		}

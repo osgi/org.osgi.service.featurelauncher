@@ -37,11 +37,11 @@ import org.osgi.service.feature.FeatureService;
 import org.osgi.service.feature.ID;
 import org.osgi.service.featurelauncher.runtime.InstalledBundle;
 import org.osgi.service.featurelauncher.runtime.MergeOperationType;
-import org.osgi.service.featurelauncher.runtime.RuntimeBundleMerge;
 import org.osgi.service.featurelauncher.runtime.RuntimeBundleMerge.BundleMapping;
 import org.osgi.service.featurelauncher.runtime.RuntimeBundleMerge.FeatureBundleDefinition;
-import org.osgi.service.featurelauncher.runtime.RuntimeConfigurationMerge;
+import org.osgi.service.featurelauncher.runtime.RuntimeBundleMerge;
 import org.osgi.service.featurelauncher.runtime.RuntimeConfigurationMerge.FeatureConfigurationDefinition;
+import org.osgi.service.featurelauncher.runtime.RuntimeConfigurationMerge;
 import org.osgi.service.featurelauncher.runtime.RuntimeMerges;
 import org.osgi.test.common.annotation.InjectService;
 
@@ -236,7 +236,7 @@ public class RuntimeMergeStrategyTest {
 		void getOSGiVersion_snapshot_stripsSuffix() {
 			// The -SNAPSHOT suffix is stripped before parsing.
 			Version v = RuntimeMerges.getOSGiVersion(id("g:a:1.2.3-SNAPSHOT"));
-			assertThat(v.getMajor()).isEqualTo(1);
+			assertThat(v.getMajor()).isOne();
 			assertThat(v.getMinor()).isEqualTo(2);
 			assertThat(v.getMicro()).isEqualTo(3);
 		}
@@ -246,7 +246,7 @@ public class RuntimeMergeStrategyTest {
 			// Lenient parsing: a trailing non-numeric segment becomes the
 			// qualifier rather than failing.
 			Version v = RuntimeMerges.getOSGiVersion(id("g:a:1.0.0.beta"));
-			assertThat(v.getMajor()).isEqualTo(1);
+			assertThat(v.getMajor()).isOne();
 			assertThat(v.getQualifier()).isEqualTo("beta");
 		}
 	}

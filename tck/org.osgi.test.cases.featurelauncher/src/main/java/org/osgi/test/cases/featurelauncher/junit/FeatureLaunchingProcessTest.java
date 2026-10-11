@@ -19,6 +19,8 @@
 package org.osgi.test.cases.featurelauncher.junit;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.osgi.test.assertj.bundle.BundleAssert.assertThat;
 import static org.osgi.test.cases.featurelauncher.junit.TckTestHelper.mapOf;
 
 import java.io.IOException;
@@ -120,7 +122,7 @@ public class FeatureLaunchingProcessTest {
 			for (InstalledBundle ib : installed.getInstalledBundles()) {
 				Bundle b = ib.getBundle();
 				if (b.getHeaders().get("Fragment-Host") == null) {
-					assertThat(b.getState()).isEqualTo(Bundle.ACTIVE);
+					assertThat(b).isInState(Bundle.ACTIVE);
 				}
 			}
 		}

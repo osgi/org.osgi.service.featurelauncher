@@ -309,7 +309,7 @@ public class RuntimeIntrospectionTest {
 		void getStartLevel_returnsCalculatedLevel() {
 			// 160.5: getStartLevel() returns the calculated start level
 			int startLevel = installedBundle.getStartLevel();
-			assertThat(startLevel).isGreaterThan(0);
+			assertThat(startLevel).isPositive();
 		}
 
 		@Test
@@ -394,7 +394,7 @@ public class RuntimeIntrospectionTest {
 					.getInstalledConfigurations()
 					.get(0);
 			assertThat(fc.getFactoryPid()).isPresent();
-			assertThat(fc.getFactoryPid().get()).isEqualTo("test.factory");
+			assertThat(fc.getFactoryPid()).hasValue("test.factory");
 		}
 
 		@Test

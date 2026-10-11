@@ -19,6 +19,8 @@
 package org.osgi.test.cases.featurelauncher.junit;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.osgi.test.assertj.bundle.BundleAssert.assertThat;
 import static org.osgi.test.cases.featurelauncher.junit.TckTestHelper.mapOf;
 
 import java.io.IOException;
@@ -129,8 +131,7 @@ public class RuntimeUpdateTest {
 					.addRepository("test", testRepo)
 					.complete();
 
-			assertThat(result.getFeature().getID().toString())
-					.isEqualTo("g:update-reader:2.0");
+			assertThat(result.getFeature().getID()).hasToString("g:update-reader:2.0");
 			assertThat(result.getInstalledBundles())
 					.anySatisfy(ib -> assertThat(ib.getBundleId().toString())
 							.contains(TckTestHelper.TB2_ARTIFACT));
@@ -232,7 +233,7 @@ public class RuntimeUpdateTest {
 			Bundle oldBundle = installed.getInstalledBundles()
 					.get(0)
 					.getBundle();
-			assertThat(oldBundle.getState()).isEqualTo(Bundle.ACTIVE);
+			assertThat(oldBundle).isInState(Bundle.ACTIVE);
 
 			// Update to a different bundle set
 			Feature updated = TckTestHelper.createFeatureWithBundles(fs,
@@ -243,7 +244,7 @@ public class RuntimeUpdateTest {
 
 			// Old bundle should no longer be active (stopped during removal
 			// phase)
-			assertThat(oldBundle.getState()).isNotEqualTo(Bundle.ACTIVE);
+			assertThat(oldBundle).isNotInState(Bundle.ACTIVE);
 		}
 
 		@Test
@@ -267,8 +268,7 @@ public class RuntimeUpdateTest {
 			assertThat(newBundles).isNotEmpty();
 			for (InstalledBundle ib : newBundles) {
 				assertThat(ib.getBundle()).isNotNull();
-				assertThat(ib.getBundle().getState())
-						.isNotEqualTo(Bundle.UNINSTALLED);
+				assertThat(ib.getBundle()).isNotInState(Bundle.UNINSTALLED);
 			}
 		}
 
@@ -301,7 +301,7 @@ public class RuntimeUpdateTest {
 			try {
 				Configuration[] configs = cm
 						.listConfigurations("(service.pid=" + pid + ")");
-				assertThat(configs).isNotNull().isNotEmpty();
+				assertThat(configs).isNotEmpty();
 				assertThat(configs[0].getProperties().get("key"))
 						.isEqualTo("value2");
 			} finally {
@@ -366,7 +366,7 @@ public class RuntimeUpdateTest {
 				Bundle b = ib.getBundle();
 				// Non-fragment bundles should be active
 				if (b.getHeaders().get("Fragment-Host") == null) {
-					assertThat(b.getState()).isEqualTo(Bundle.ACTIVE);
+					assertThat(b).isInState(Bundle.ACTIVE);
 				}
 			}
 		}
@@ -393,7 +393,7 @@ public class RuntimeUpdateTest {
 					.complete();
 
 			// Old bundle should be uninstalled
-			assertThat(oldBundle.getState()).isEqualTo(Bundle.UNINSTALLED);
+			assertThat(oldBundle).isInState(Bundle.UNINSTALLED);
 		}
 	}
 
@@ -441,8 +441,7 @@ public class RuntimeUpdateTest {
 
 			// Shared tb1 bundle should still be installed (owned by feature2)
 			if (sharedBundle != null) {
-				assertThat(sharedBundle.getState())
-						.isNotEqualTo(Bundle.UNINSTALLED);
+				assertThat(sharedBundle).isNotInState(Bundle.UNINSTALLED);
 			}
 		}
 
@@ -483,7 +482,7 @@ public class RuntimeUpdateTest {
 			try {
 				Configuration[] configs = cm
 						.listConfigurations("(service.pid=" + sharedPid + ")");
-				assertThat(configs).isNotNull().isNotEmpty();
+				assertThat(configs).isNotEmpty();
 			} finally {
 				ctx.ungetService(
 						ctx.getServiceReference(ConfigurationAdmin.class));
@@ -565,8 +564,7 @@ public class RuntimeUpdateTest {
 					.orElse(null);
 			if (current != null && !current.getInstalledBundles().isEmpty()) {
 				Bundle b = current.getInstalledBundles().get(0).getBundle();
-				assertThat(b.getState()).isIn(Bundle.ACTIVE, Bundle.RESOLVED,
-						Bundle.INSTALLED);
+				assertThat(b).isInStateMaskedBy(Bundle.ACTIVE | Bundle.RESOLVED | Bundle.INSTALLED);
 			}
 		}
 
@@ -648,8 +646,7 @@ public class RuntimeUpdateTest {
 			// All new bundles should be started
 			for (InstalledBundle ib : result.getInstalledBundles()) {
 				if (ib.getBundle().getHeaders().get("Fragment-Host") == null) {
-					assertThat(ib.getBundle().getState())
-							.isEqualTo(Bundle.ACTIVE);
+					assertThat(ib.getBundle()).isInState(Bundle.ACTIVE);
 				}
 			}
 		}
@@ -711,8 +708,7 @@ public class RuntimeUpdateTest {
 			for (InstalledBundle ib : result.getInstalledBundles()) {
 				Bundle b = ib.getBundle();
 				if (b.getHeaders().get("Fragment-Host") == null) {
-					assertThat(b.getState()).isIn(Bundle.ACTIVE,
-							Bundle.RESOLVED);
+					assertThat(b).isInStateMaskedBy(Bundle.ACTIVE | Bundle.RESOLVED);
 				}
 			}
 		}
