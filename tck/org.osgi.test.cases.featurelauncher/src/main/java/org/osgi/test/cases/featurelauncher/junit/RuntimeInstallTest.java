@@ -19,6 +19,8 @@
 package org.osgi.test.cases.featurelauncher.junit;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.osgi.test.assertj.bundle.BundleAssert.assertThat;
 import static org.osgi.test.cases.featurelauncher.junit.TckTestHelper.mapOf;
 
 import java.io.ByteArrayInputStream;
@@ -504,10 +506,9 @@ public class RuntimeInstallTest {
 				Bundle bundle = ib.getBundle();
 				// Non-fragment bundles should be ACTIVE
 				if (bundle.getHeaders().get("Fragment-Host") == null) {
-					assertThat(bundle.getState())
+					assertThat(bundle)
 							.as("Bundle %s should be ACTIVE",
-									bundle.getSymbolicName())
-							.isEqualTo(Bundle.ACTIVE);
+									bundle.getSymbolicName()).isInState(Bundle.ACTIVE);
 				}
 			}
 		}
@@ -560,10 +561,9 @@ public class RuntimeInstallTest {
 			List<InstalledBundle> bundles = installed.getInstalledBundles();
 			for (InstalledBundle ib : bundles) {
 				if (ib.getStartLevel() > currentLevel) {
-					assertThat(ib.getBundle().getState())
+					assertThat(ib.getBundle())
 							.as("Bundle with higher start level should not "
-									+ "be ACTIVE")
-							.isNotEqualTo(Bundle.ACTIVE);
+									+ "be ACTIVE").isNotInState(Bundle.ACTIVE);
 				}
 			}
 		}

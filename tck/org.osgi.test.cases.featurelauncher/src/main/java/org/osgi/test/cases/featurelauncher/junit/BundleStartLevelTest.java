@@ -118,8 +118,7 @@ public class BundleStartLevelTest {
 			InstalledFeature installed = runtime.install(feature)
 					.addRepository("test", testRepo)
 					.complete();
-			assertThat(installed.getInstalledBundles().get(0).getStartLevel())
-					.isEqualTo(1);
+			assertThat(installed.getInstalledBundles().get(0).getStartLevel()).isOne();
 		}
 	}
 
@@ -138,8 +137,7 @@ public class BundleStartLevelTest {
 					.addRepository("test", testRepo)
 					.complete();
 			assertThat(installed.getInstalledBundles()).isNotEmpty();
-			assertThat(installed.getInstalledBundles().get(0).getStartLevel())
-					.isGreaterThan(0);
+			assertThat(installed.getInstalledBundles().get(0).getStartLevel()).isPositive();
 		}
 
 		@Test
@@ -164,7 +162,7 @@ public class BundleStartLevelTest {
 					.complete();
 			assertThat(installed.getInstalledBundles()).isNotEmpty();
 			int sl = installed.getInstalledBundles().get(0).getStartLevel();
-			assertThat(sl).isGreaterThan(0);
+			assertThat(sl).isPositive();
 		}
 	}
 

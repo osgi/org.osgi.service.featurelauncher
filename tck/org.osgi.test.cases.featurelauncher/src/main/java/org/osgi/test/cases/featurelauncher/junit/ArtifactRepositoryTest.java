@@ -70,7 +70,7 @@ public class ArtifactRepositoryTest {
 		ID id = fs.getIDfromMavenCoordinates(TckTestHelper.TB1_COORDS);
 		try (InputStream is = repo.getArtifact(id)) {
 			assertThat(is).isNotNull();
-			assertThat(is.read()).isGreaterThanOrEqualTo(0);
+			assertThat(is.read()).isNotNegative();
 		}
 	}
 

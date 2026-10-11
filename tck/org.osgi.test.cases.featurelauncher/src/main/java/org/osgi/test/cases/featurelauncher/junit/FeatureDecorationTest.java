@@ -349,7 +349,7 @@ public class FeatureDecorationTest {
 					.complete();
 			// First handler should have been replaced by second
 			// If the feature has "some-ext" extension, only second is called
-			assertThat(callCount1.get()).isEqualTo(0);
+			assertThat(callCount1.get()).isZero();
 		}
 	}
 
@@ -538,9 +538,7 @@ public class FeatureDecorationTest {
 					.withDecorator(decorator)
 					.complete();
 			assertThat(installed.isDecorated()).isTrue();
-			assertThat(installed.getFeature().getID().getClassifier())
-					.isPresent()
-					.hasValue("custom-classifier");
+			assertThat(installed.getFeature().getID().getClassifier()).hasValue("custom-classifier");
 		}
 
 		@Test

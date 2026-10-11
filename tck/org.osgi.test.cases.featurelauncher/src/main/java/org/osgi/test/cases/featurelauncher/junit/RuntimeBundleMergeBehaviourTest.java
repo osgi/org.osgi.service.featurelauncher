@@ -95,8 +95,7 @@ public class RuntimeBundleMergeBehaviourTest {
 
 		long tbmCount = countBundles(TckTestHelper.TBM_SYMBOLIC_NAME);
 		assertThat(tbmCount)
-				.as("the merge must not produce a second tbm bundle")
-				.isEqualTo(1L);
+				.as("the merge must not produce a second tbm bundle").isOne();
 
 		Bundle tbm = findBundle(TckTestHelper.TBM_SYMBOLIC_NAME);
 		assertThat(tbm)
