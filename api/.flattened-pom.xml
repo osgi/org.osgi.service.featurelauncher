@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.osgi</groupId>
   <artifactId>org.osgi.service.featurelauncher</artifactId>
-  <version>1.0.1-SNAPSHOT</version>
-  <description>OSGi Specification repo for org.osgi.service.featurelauncher</description>
+  <version>1.0.0-SNAPSHOT</version>
+  <description>OSGi Feature Launcher Service Specification</description>
   <url>https://projects.eclipse.org/projects/technology.osgi/org.osgi.service.featurelauncher.reactor/org.osgi.service.featurelauncher</url>
   <organization>
     <name>Eclipse Foundation</name>
@@ -30,14 +31,14 @@
       <email>stbischof@bipolis.org</email>
     </developer>
   </developers>
-  <scm>
-    <connection>scm:git:https://github.com/osgi/org.osgi.service.featurelauncher.reactor/org.osgi.service.featurelauncher</connection>
-    <developerConnection>scm:git:git@github.com:osgi/org.osgi.service.featurelauncher.reactor/org.osgi.service.featurelauncher</developerConnection>
-    <url>https://github.com/osgi/org.osgi.service.featurelauncher.reactor/org.osgi.service.featurelauncher</url>
+  <scm child.scm.connection.inherit.append.path="false" child.scm.developerConnection.inherit.append.path="false" child.scm.url.inherit.append.path="false">
+    <connection>scm:git:https://github.com/osgi/org.osgi.service.featurelauncher.git</connection>
+    <developerConnection>scm:git:git@github.com:osgi/org.osgi.service.featurelauncher.git</developerConnection>
+    <url>https://github.com/osgi/org.osgi.service.featurelauncher</url>
   </scm>
   <issueManagement>
     <system>GitHub Issues</system>
-    <url>https://github.com/osgi/osgi/issues</url>
+    <url>https://github.com/osgi/org.osgi.service.featurelauncher/issues</url>
   </issueManagement>
   <distributionManagement>
     <snapshotRepository>
@@ -61,7 +62,7 @@
     <dependency>
       <groupId>org.osgi</groupId>
       <artifactId>org.osgi.framework</artifactId>
-      <version>1.10.0</version>
+      <version>1.8.0</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -117,7 +118,7 @@
       <plugin>
         <groupId>biz.aQute.bnd</groupId>
         <artifactId>bnd-maven-plugin</artifactId>
-        <version>7.2.3</version>
+        <version>6.4.0</version>
         <extensions>true</extensions>
       </plugin>
     </plugins>
