@@ -8,7 +8,9 @@
 
 -runvm: ${def;argLine}, -Djava.security.manager=allow
 
+# Mockito's inline mock maker injects its dispatcher into the boot class loader
 -runproperties: \
+	org.osgi.framework.bootdelegation=org.mockito.internal.creation.bytebuddy.inject
 
 
 -runfw: org.eclipse.osgi
