@@ -14,7 +14,7 @@
 
 	<properties>
 		<artifact.maven.version>1.0.0-SNAPSHOT</artifact.maven.version>
-		<asm-all.version>5.0.4</asm-all.version>
+		<asm-all.version>5.2</asm-all.version>
 		<common.osgi.version>1.0.0-SNAPSHOT</common.osgi.version>
 		<featureservice.version>1.0.0-SNAPSHOT</featureservice.version>
 		<jakarta.json.version>2.0.1</jakarta.json.version>
