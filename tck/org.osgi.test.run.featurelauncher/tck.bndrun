@@ -33,9 +33,7 @@ tck.range: ${range;[===,==+);${version_cleanup;${1}}}
 	bnd.identity;id='org.osgi.test.cases.featurelauncher';version='${tck.range;${revision}}',\
 	bnd.identity;id='org.apache.felix.configadmin';version='${tck.range;${org.apache.felix.configadmin.version}}',\
 	bnd.identity;id='org.apache.felix.scr';version='${tck.range;${org.apache.felix.scr.version}}',\
-	bnd.identity;id='org.apache.aries.spifly.dynamic.bundle';version='${tck.range;${org.apache.aries.spifly.dynamic.bundle.version}}',\
-	bnd.identity;id='org.apache.aries.util';version='${tck.range;${org.apache.aries.util.version}}',\
-	bnd.identity;id='org.objectweb.asm.all';version='${tck.range;${asm-all.version}}',\
+	bnd.identity;id='org.apache.aries.spifly.dynamic.framework.extension';version='${tck.range;${org.apache.aries.spifly.dynamic.framework.extension.version}}',\
 	bnd.identity;id='org.eclipse.osgi-technology.featurelauncher.runtime';version='${tck.range;${runtime.version}}',\
 	bnd.identity;id='org.eclipse.osgi-technology.featurelauncher.repository.artifact.maven';version='${tck.range;${artifact.maven.version}}',\
 	bnd.identity;id='org.eclipse.osgi-technology.featurelauncher.repository.common.osgi';version='${tck.range;${common.osgi.version}}',\
@@ -63,6 +61,8 @@ tck.range: ${range;[===,==+);${version_cleanup;${1}}}
 
 # -runbundles is committed and verified by the build; after a dependency
 # change update it with: mvn bnd-resolver:resolve
+# slf4j 2 binds its provider once, at the first logger: slf4j starts at
+# level 1, before the implementation (all others at 2), or it logs nothing.
 -runbundles: \
 	assertj-core;version='${tck.range;${assertj.version}}',\
 	com.grack.nanojson;version='${tck.range;${nanojson.version}}',\
@@ -74,8 +74,7 @@ tck.range: ${range;[===,==+);${version_cleanup;${1}}}
 	junit-platform-launcher;version='${tck.range;${junit-platform.version}}',\
 	net.bytebuddy.byte-buddy;version='${tck.range;${byte-buddy.version}}',\
 	net.bytebuddy.byte-buddy-agent;version='${tck.range;${byte-buddy.version}}',\
-	org.apache.aries.spifly.dynamic.bundle;version='${tck.range;${org.apache.aries.spifly.dynamic.bundle.version}}',\
-	org.apache.aries.util;version='${tck.range;${org.apache.aries.util.version}}',\
+	org.apache.aries.spifly.dynamic.framework.extension;version='${tck.range;${org.apache.aries.spifly.dynamic.framework.extension.version}}',\
 	org.apache.felix.configadmin;version='${tck.range;${org.apache.felix.configadmin.version}}',\
 	org.apache.felix.scr;version='${tck.range;${org.apache.felix.scr.version}}',\
 	org.eclipse.osgi-technology.featurelauncher.featureservice.featureservice;version='${tck.range;${featureservice.version}}',\
@@ -85,7 +84,6 @@ tck.range: ${range;[===,==+);${version_cleanup;${1}}}
 	org.eclipse.osgi-technology.featurelauncher.runtime;version='${tck.range;${runtime.version}}',\
 	org.glassfish.jakarta.json;version='${tck.range;${jakarta.json.version}}',\
 	org.mockito.mockito-core;version='${tck.range;${mockito.version}}',\
-	org.objectweb.asm.all;version='${tck.range;${asm-all.version}}',\
 	org.objenesis;version='${tck.range;${objenesis.version}}',\
 	org.opentest4j;version='${tck.range;${opentest4j.version}}',\
 	org.osgi.service.component;version='${tck.range;${org.osgi.service.component.version}}',\
@@ -97,5 +95,5 @@ tck.range: ${range;[===,==+);${version_cleanup;${1}}}
 	org.osgi.test.junit5;version='${tck.range;${osgi-test.version}}',\
 	org.osgi.util.function;version='${tck.range;${org.osgi.util.function.version}}',\
 	org.osgi.util.promise;version='${tck.range;${org.osgi.util.promise.version}}',\
-	slf4j.api;version='${tck.range;${slf4j.version}}',\
-	slf4j.simple;version='${tck.range;${slf4j.version}}'
+	slf4j.api;version='${tck.range;${slf4j.version}}';startlevel=1,\
+	slf4j.simple;version='${tck.range;${slf4j.version}}';startlevel=1
