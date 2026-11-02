@@ -41,20 +41,8 @@
 		</dependency>
 		<dependency>
 			<groupId>org.apache.aries.spifly</groupId>
-			<artifactId>org.apache.aries.spifly.dynamic.bundle</artifactId>
-			<version>${org.apache.aries.spifly.dynamic.bundle.version}</version>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.aries</groupId>
-			<artifactId>org.apache.aries.util</artifactId>
-			<version>${org.apache.aries.util.version}</version>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.ow2.asm</groupId>
-			<artifactId>asm-all</artifactId>
-			<version>${asm-all.version}</version>
+			<artifactId>org.apache.aries.spifly.dynamic.framework.extension</artifactId>
+			<version>${org.apache.aries.spifly.dynamic.framework.extension.version}</version>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
