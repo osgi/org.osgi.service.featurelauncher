@@ -162,8 +162,9 @@ public interface FeatureRuntime extends ArtifactRepositoryFactory {
 		 * Use The supplied {@link RuntimeBundleMerge} to resolve any bundle
 		 * merge operations that are required to complete the operation
 		 * 
-		 * @param merge
+		 * @param merge the bundle merge strategy to use
 		 * @return <code>this</code>
+		 * @throws IllegalStateException if the builder has been completed
 		 */
 		T withBundleMerge(RuntimeBundleMerge merge);
 
@@ -172,8 +173,9 @@ public interface FeatureRuntime extends ArtifactRepositoryFactory {
 		 * configuration merge operations that are required to complete the
 		 * operation
 		 * 
-		 * @param merge
+		 * @param merge the configuration merge strategy to use
 		 * @return <code>this</code>
+		 * @throws IllegalStateException if the builder has been completed
 		 */
 		T withConfigurationMerge(RuntimeConfigurationMerge merge);
 

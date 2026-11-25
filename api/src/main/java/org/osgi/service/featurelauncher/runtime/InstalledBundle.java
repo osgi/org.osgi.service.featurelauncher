@@ -25,7 +25,7 @@ import org.osgi.framework.Bundle;
 import org.osgi.service.feature.ID;
 
 /**
- * An {@link InstalledBundle} represents a configuration that has been
+ * An {@link InstalledBundle} represents a bundle that has been
  * installed as a result of one or more feature installations.
  * <p>
  * This type is a snapshot and represents the state of the runtime when it was
