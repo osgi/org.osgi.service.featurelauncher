@@ -48,7 +48,8 @@ import org.osgi.service.feature.ID;
  * currently installed bundles applicable to the merge, and a {@link List} of
  * {@link FeatureBundleDefinition}s representing the {@link FeatureBundle}s and
  * installed features participating in the merge. All Installed Bundle and
- * Feature Bundle objects will have the same group id and artifact id.
+ * Feature Bundle objects will have the same group id, artifact id, type and
+ * classifier.
  * <p>
  * If an <code>UPDATE</code> or <code>REMOVE</code> operation is underway then
  * the Feature being updated or removed will already have been removed from any
@@ -81,9 +82,10 @@ public interface RuntimeBundleMerge {
 	 * operation.
 	 * <p>
 	 * Bundle Merge operations occur when two or more features reference a
-	 * bundle with the same group id and artifact id, and the purpose of this
-	 * method is to identify which bundles should be/remain installed, and which
-	 * features they should be owned by.
+	 * bundle with the same group id, artifact id, type and classifier but
+	 * different versions, and the purpose of this method is to identify which
+	 * bundles should be/remain installed, and which features they should be
+	 * owned by.
 	 * <p>
 	 * The returned result from the merge function must be a full mapping of
 	 * installed Bundle {@link ID}s to Lists of owning Features. It is an error

@@ -1480,7 +1480,8 @@ fw.waitForStop(0);
           <title>Merging Bundles</title>
           <para>Features may define bundles to be installed by including Feature Bundle
           entries. If two or more Features include Feature Bundles which have IDs with
-          the same group id and artifact id, but which are not the same, then this 
+          the same group id, artifact id, type and classifier, but which are not the same
+          (that is, they have different versions), then this
           situation requires a merge to resolve the possible conflict. Determining
           whether two IDs are the same is accomplished by checking whether they
           return equal strings from <code>toString()</code>.</para>
@@ -1525,7 +1526,8 @@ fw.waitForStop(0);
             </listitem>
             <listitem>
               <para>A <code>Collection</code> of Installed Bundles representing the currently installed bundles
-              which have an overlapping <code>groupId</code> and <code>artifactId</code>. Note that
+              which have an overlapping <code>groupId</code>, <code>artifactId</code>, <code>type</code>
+              and <code>classifier</code>. Note that
               in the case of an <code>UPDATE</code> or <code>REMOVE</code> operation the Feature being updated
               or removed will not be present in the collection of owning features for any of the Installed Bundles.</para>
             </listitem>
