@@ -1211,14 +1211,20 @@ fw.waitForStop(0);
          xrefstyle="hyperlink"/> entry for each installed Feature, in the order
         that they were installed, and may be empty if no Features have been 
         installed. If the framework was started using a Feature Launcher from the
-        same implementation as the Feature Runtime then the Feature Runtime may 
-        choose to represent the launched Feature in the snapshot list. If the launched 
-        Feature is included in the snapshot list then it must set <xref
+        same implementation as the Feature Runtime, and both implement the same major
+        version of this specification, then the Feature Runtime must represent the
+        launched Feature in the snapshot list. This applies across minor versions, so a
+        Feature Runtime that implements version 1.1 must represent a Feature launched by
+        a version 1.0 Feature Launcher, but it is not required to represent a Feature
+        launched by an implementation of a different major version. In all other cases
+        the Feature Runtime may choose to represent the launched Feature in the snapshot
+        list. If the launched Feature is included in the snapshot list then it must set
+        <xref
          linkend="org.osgi.service.featurelauncher.runtime.InstalledFeature.isInitialLaunch--" 
          xrefstyle="hyperlink"/> to <code>true</code>. Launch features cannot be 
          removed or updated by the Feature Runtime, and any attempt to do so must
          throw a <xref linkend="org.osgi.service.featurelauncher.runtime.FeatureRuntimeException"
-          xrefstyle="hyperlink"/></para>
+          xrefstyle="hyperlink"/>.</para>
         
         <para>Each Installed Feature provides:</para>
         
