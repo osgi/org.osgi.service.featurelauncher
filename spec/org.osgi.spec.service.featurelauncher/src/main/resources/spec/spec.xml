@@ -290,8 +290,9 @@
         linkend="org.osgi.service.featurelauncher.repository.ArtifactRepositoryFactory.createRepository-URI-Map-"
         xrefstyle="hyperlink"/> method, passing in the uri to the root of the repository.
         A <code>NullPointerException</code> must be thrown if the uri is <code>null</code>
-        and an <code>IllegalArgumentException</code> must be thrown if the uri does not
-        use the <code>http</code> or <code>https</code> scheme.</para>
+        and an <code>IllegalArgumentException</code> must be thrown if the uri scheme is not
+        supported by the implementation. All implementations must support the <code>http</code>,
+        <code>https</code> and <code>file</code> schemes.</para>
         
         <para>In addition to the repository <code>URI</code> the user may pass
         configuration properties in a <code>Map</code>. Implementations may support custom
@@ -424,7 +425,7 @@
         
       <para>Setting the default start level for bundles installed by the feature is
       achieved using the <code>defaultStartLevel</code> property of the <code>JSON</code>
-      extension. This must be an integer greater than zero and less than 
+      extension. This must be an integer greater than zero and not greater than
       <code>Integer.MAX_VALUE</code>. If the <code>defaultStartLevel</code> property is not
       present then the current framework start level is used as the default start level for newly
       installed bundles, or <code>1</code> if the 
@@ -435,7 +436,7 @@
         
       <para>The minimum start level required to start the feature 
       can be set using the <code>minimumStartLevel</code> property of the <code>JSON</code>
-      extension. This must be an integer greater than zero and less than <code>Integer.MAX_INT</code>.
+      extension. This must be an integer greater than zero and not greater than <code>Integer.MAX_VALUE</code>.
       If the <code>minimumStartLevel</code> property is not set then the minimum required start level
       is set to the current framework start level, meaning that the framework start level will not
       change when the feature is started.
