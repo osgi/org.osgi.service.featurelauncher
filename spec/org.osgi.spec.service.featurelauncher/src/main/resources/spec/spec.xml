@@ -367,7 +367,21 @@
     runtime, for ongoing management of an OSGi runtime, and for merging features. 
     There are many concepts that apply across more than one of these scenarios,
     and so they are described here.</para>
-    
+
+    <section xml:id="service.featurelauncher-errors">
+      <title>Reporting errors</title>
+
+      <para>Errors detected while launching a framework using the Feature Launcher
+      are reported by throwing a <xref linkend="org.osgi.service.featurelauncher.LaunchException"
+      xrefstyle="hyperlink"/>. Errors detected while installing, updating or removing a
+      Feature using the Feature Runtime are reported by throwing a <xref
+      linkend="org.osgi.service.featurelauncher.runtime.FeatureRuntimeException"
+      xrefstyle="hyperlink"/>. Where a section of this specification requires an
+      operation to fail, or to be treated as an error, this is the exception that
+      must be thrown, with the underlying exception set as its <code>cause</code>
+      where there is one.</para>
+    </section>
+
     <section xml:id="service.featurelauncher-variable.overrides">
       <title>Overriding Feature variables</title>
         
@@ -380,9 +394,9 @@
       by the <xref linkend="service.feature"/></para>
         
       <para>If a Feature declares a variable with no default value then this variable
-      <emphasis>must</emphasis> be provided. If no value is provided then the method
-      must fail to launch by throwing a <xref linkend="org.osgi.service.featurelauncher.LaunchException"
-      xrefstyle="hyperlink"/></para>
+      <emphasis>must</emphasis> be provided. If no value is provided then the operation
+      must fail, as described in <xref linkend="service.featurelauncher-errors"
+      xrefstyle="hyperlink"/>.</para>
     </section>
     
     <section xml:id="service.featurelauncher-start.levels">
@@ -408,8 +422,8 @@
        xrefstyle="hyperlink"/> which is of type integer and has a value between
       <code>1</code> and <code>Integer.MAX_VALUE</code> inclusive. If the property does 
       not exist then the default start level will be used. If the property does 
-      exist and is not a suitable integer then launching must fail with a <xref 
-        linkend="org.osgi.service.featurelauncher.LaunchException" xrefstyle="hyperlink"/>.
+      exist and is not a suitable integer then the operation must fail, as described
+      in <xref linkend="service.featurelauncher-errors" xrefstyle="hyperlink"/>.
       </para>
         
       <para>Setting the default start level for the bundles, and the minimum start
@@ -430,9 +444,9 @@
       present then the current framework start level is used as the default start level for newly
       installed bundles, or <code>1</code> if the 
       current framework start level is <code>0</code>. If the value of <code>defaultStartLevel</code>
-      is not valid then a <xref 
-          linkend="org.osgi.service.featurelauncher.LaunchException" xrefstyle="hyperlink"/>
-      must be thrown when attempting to use the feature.</para>
+      is not valid then the operation must fail, as described in <xref
+          linkend="service.featurelauncher-errors" xrefstyle="hyperlink"/>,
+      when attempting to use the feature.</para>
         
       <para>The minimum start level required to start the feature 
       can be set using the <code>minimumStartLevel</code> property of the <code>JSON</code>
@@ -440,16 +454,17 @@
       If the <code>minimumStartLevel</code> property is not set then the minimum required start level
       is set to the current framework start level, meaning that the framework start level will not
       change when the feature is started.
-      If the value of the <code>minimumStartLevel</code> property is not valid then a <xref 
-        linkend="org.osgi.service.featurelauncher.LaunchException" xrefstyle="hyperlink"/>
-      must be thrown when attempting to use the feature.</para>
+      If the value of the <code>minimumStartLevel</code> property is not valid then the
+      operation must fail, as described in <xref
+        linkend="service.featurelauncher-errors" xrefstyle="hyperlink"/>,
+      when attempting to use the feature.</para>
       
       <para>Finally the <code>version</code> property defines the version of the extension
       schema being used. This can be used by the implementation to determine whether the 
       Feature is targeting a newer version of the specification. If the version is missing,
-      or not understood by the implementation then a <xref 
-        linkend="org.osgi.service.featurelauncher.LaunchException" xrefstyle="hyperlink"/>
-      must be thrown when attempting to use the feature.</para>
+      or not understood by the implementation then the operation must fail, as
+      described in <xref linkend="service.featurelauncher-errors" xrefstyle="hyperlink"/>,
+      when attempting to use the feature.</para>
     </section>
     
     <section xml:id="service.featurelauncher-feature.decoration">
@@ -477,7 +492,8 @@
        linkend="org.osgi.service.featurelauncher.decorator.AbandonOperationException"
        xrefstyle="hyperlink"/>. This will cause the operation to be immediately halted, but must be
        treated as an error when logging. Abandoned operations must result in
-       an exception being thrown to the caller who requested the operation.</para>
+       an exception being thrown to the caller who requested the operation, as
+       described in <xref linkend="service.featurelauncher-errors" xrefstyle="hyperlink"/>.</para>
       
       <section>
         <title>Building decorated features</title>
@@ -724,7 +740,7 @@
         The value of each property is used as the value of the Framework Launch Property,
         and must be a scalar type, that is a <code>JSON</code> <code>string</code>,
         <code>number</code> or <code>boolean</code>. If the value is a different <code>JSON</code>
-        type then this must be treated as an error.</para>
+        type then the launch must fail with a <code>LaunchException</code>.</para>
         
         <para>
         If the <code>JSON</code> property starts with a single underscore then it may be
