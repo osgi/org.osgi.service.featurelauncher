@@ -2361,6 +2361,18 @@ public Map&lt;String,Object&gt; mergeConfiguration(MergeOperationType operation,
       <para>This capability must follow the rules defined for the <xref
       linkend="service.namespaces-osgi.service.namespace"/>.</para>
     </section>
+
+    <section>
+      <title>osgi.serviceloader Capability</title>
+
+      <para>The <xref linkend="org.osgi.service.featurelauncher.FeatureLauncher"
+      xrefstyle="hyperlink"/> is intended for use outside of an OSGi framework,
+      where it is found using the Java ServiceLoader API. All of the other
+      service provider interfaces defined by this specification are available
+      inside an OSGi framework as OSGi services. There is therefore no
+      requirement for an implementation to provide, or to require, capabilities
+      in the <code>osgi.serviceloader</code> namespace.</para>
+    </section>
   </section>
 
   <section>
