@@ -1447,6 +1447,12 @@ fw.waitForStop(0);
          linkend="org.osgi.service.featurelauncher.runtime.MergeOperationType"
          xrefstyle="hyperlink"/> indicating which type of operation is currently 
          running.</para>
+
+        <para>Merge strategies are set on an Operation Builder using the
+        <code>withBundleMerge</code> and <code>withConfigurationMerge</code> methods.
+        Calling either method again replaces the strategy that was previously set.
+        Passing <code>null</code> removes a previously set strategy from the Operation Builder.</para>
+
         <section xml:id="service.featurelauncher-runtime.merge.strategies.bundles">
           <title>Merging Bundles</title>
           <para>Features may define bundles to be installed by including Feature Bundle
