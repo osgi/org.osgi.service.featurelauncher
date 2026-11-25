@@ -1910,6 +1910,10 @@ public Map&lt;String,Object&gt; mergeConfiguration(MergeOperationType operation,
           then the start level for that bundle is set to the current start level of the 
           framework.</para>
           
+          <para>If one or more of the bundles installed for the Feature cannot be resolved then this
+          is an error <emphasis>unless</emphasis> the Feature is not complete. For Features that are
+          not complete resolution failures must be logged, but must not cause a failure.</para>
+          
           <para>The Feature Runtime must then identify the lowest start level referenced
           in the Feature, and repeatedly run through the list of bundles, in the order that
           they are defined in the Feature, looking for bundles which match the identified 
@@ -1963,6 +1967,11 @@ public Map&lt;String,Object&gt; mergeConfiguration(MergeOperationType operation,
             </listitem>
             <listitem>
               <para>A <code>BundleException</code> is thrown during <xref 
+               linkend="service.featurelauncher-runtime.feature.start" xrefstyle="hyperlink"/>.
+              </para>
+            </listitem>
+            <listitem>
+              <para>A bundle of a complete Feature fails to resolve during <xref
                linkend="service.featurelauncher-runtime.feature.start" xrefstyle="hyperlink"/>.
               </para>
             </listitem>
@@ -2248,6 +2257,14 @@ public Map&lt;String,Object&gt; mergeConfiguration(MergeOperationType operation,
               <para>A <code>BundleException</code> is thrown during <xref 
                linkend="service.featurelauncher-runtime.feature.update.start" xrefstyle="hyperlink"/>.
                This should result in the imediate failure of the operation,
+               rolling back to the pre-update state, with a <code>FeatureRuntimeException</code> thrown
+               to the caller.
+              </para>
+            </listitem>
+            <listitem>
+              <para>A bundle of a complete Feature fails to resolve during <xref
+               linkend="service.featurelauncher-runtime.feature.update.start" xrefstyle="hyperlink"/>.
+               This should result in the immediate failure of the operation,
                rolling back to the pre-update state, with a <code>FeatureRuntimeException</code> thrown
                to the caller.
               </para>
