@@ -2353,6 +2353,11 @@ public Map&lt;String,Object&gt; mergeConfiguration(MergeOperationType operation,
  objectClass:List&lt;String&gt;="org.osgi.service.featurelauncher.repository.ArtifactRepositoryFactory";
  uses:="org.osgi.service.featurelauncher.repository"</programlisting>
 
+      <para>The <xref linkend="org.osgi.service.featurelauncher.FeatureLauncher"
+      xrefstyle="hyperlink"/> is not an OSGi service. It is obtained using the
+      Java ServiceLoader API, and so implementations should not provide an
+      <code>osgi.service</code> capability for it.</para>
+
       <para>This capability must follow the rules defined for the <xref
       linkend="service.namespaces-osgi.service.namespace"/>.</para>
     </section>
