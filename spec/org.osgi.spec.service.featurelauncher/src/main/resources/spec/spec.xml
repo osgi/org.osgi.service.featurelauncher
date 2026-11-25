@@ -2308,7 +2308,34 @@ public Map&lt;String,Object&gt; mergeConfiguration(MergeOperationType operation,
     <title>Capabilities</title>
 
     <para>The Feature Launcher must provide the following capabilities.</para>
-    
+
+    <section>
+      <title>osgi.implementation Capability</title>
+
+      <para>The Feature Launcher implementation bundle must provide the <link
+      linkend="service.namespaces-osgi.implementation.namespace"><code>osgi.implementation</code></link>
+      capability with the name <xref
+      linkend="org.osgi.service.featurelauncher.FeatureLauncherConstants.FEATURE_LAUNCHER_IMPLEMENTATION"
+      xrefstyle="hyperlink"/>. This capability can be used by provisioning
+      tools and during resolution to ensure that a Feature Launcher
+      implementation is present. The capability must also declare a uses
+      constraint for the <code>org.osgi.service.featurelauncher</code> package
+      and provide the version of this specification:</para>
+
+      <programlisting>Provide-Capability: osgi.implementation;
+ osgi.implementation="osgi.featurelauncher";
+ uses:="org.osgi.service.featurelauncher";
+ version:Version="1.0"</programlisting>
+
+      <para>The <xref
+      linkend="org.osgi.service.featurelauncher.annotation.RequireFeatureLauncher"
+      xrefstyle="hyperlink"/> annotation can be used to require this
+      capability.</para>
+
+      <para>This capability must follow the rules defined for the <xref
+      linkend="service.namespaces-osgi.implementation.namespace"/>.</para>
+    </section>
+
     <section>
       <title>osgi.service Capability</title>
 
