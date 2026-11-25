@@ -742,6 +742,12 @@
         <code>number</code> or <code>boolean</code>. If the value is a different <code>JSON</code>
         type then the launch must fail with a <code>LaunchException</code>.</para>
         
+        <para>A <code>JSON</code> <code>string</code> is used as the value of the Framework Launch Property
+        unchanged. A <code>JSON</code> <code>boolean</code> is converted to the text <code>true</code> or
+        <code>false</code>, and a <code>JSON</code> <code>number</code> is converted to its text exactly as it
+        is written in the <code>JSON</code>, so <code>1.0</code> is <code>"1.0"</code> and <code>5000</code>
+        is <code>"5000"</code>.</para>
+        
         <para>
         If the <code>JSON</code> property starts with a single underscore then it may be
         used for implementation specific behaviour, with the prefix <code>_osgi</code>
