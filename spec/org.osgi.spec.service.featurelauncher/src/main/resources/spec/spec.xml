@@ -1961,11 +1961,9 @@ public Map&lt;String,Object&gt; mergeConfiguration(MergeOperationType operation,
           
           <para>The Feature Runtime must then identify the next lowest start level referenced
           in the Feature and repeat this process until all bundles have been persistently
-          started. Once this process is complete then the framework start level must be
-          increased to the minimum start level required by the Feature, or returned to the
-          original framework start level if this is higher and was decreased as part of
-          <xref linkend="service.featurelauncher-runtime.merge.strategies.bundles"
-           xrefstyle="hyperlink"/>.</para>
+          started. Once this process is complete then the framework start level must be at
+          least the minimum start level required by the Feature, and must be no lower than it
+          was before the operation began.</para>
           
         </section>
         
