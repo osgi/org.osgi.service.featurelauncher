@@ -667,7 +667,7 @@
         linkend="org.osgi.service.featurelauncher.FeatureLauncher.LaunchBuilder.withRepository-ArtifactRepository-"
         xrefstyle="hyperlink"/> methods. Configuration properties for the Feature
         Launcher are implementation specific, and any unrecognised property names
-        should be ignored. Artifact Repository instances may be created by the user
+        must be ignored. Artifact Repository instances may be created by the user
         using as described in <xref linkend="service.featurelauncher-arf" 
         xrefstyle="hyperlink"/>, or using custom implementations.</para>
         
@@ -1084,8 +1084,8 @@ fw.waitForStop(0);
         until all configurations have been created, subject to the timeout defined by <xref 
           linkend="org.osgi.service.featurelauncher.FeatureLauncherConstants.CONFIGURATION_TIMEOUT"
           xrefstyle="hyperlink"/>. The default timeout is <code>5000</code> milliseconds,
-        and it determines the maximum length of time that the Feature Launcher implementation
-        should wait to begin creating the configurations. A value of <code>-1</code> indicates
+        and it is the longest time that the Feature Launcher implementation may
+        wait to begin creating the configurations. A value of <code>-1</code> indicates
         that the Feature Launcher implementation must not wait, and must continue immediately,
         even if the configurations have not yet been created. If it is not possible to begin before
         the timeout expires then a  <xref linkend="org.osgi.service.featurelauncher.LaunchException"
@@ -1115,7 +1115,7 @@ fw.waitForStop(0);
           <listitem>
             <para>A resolved bundle fails to start. If one of the resolved bundles fails to start
             this is an error <emphasis>unless</emphasis> the bundle is a fragment or an extension 
-            bundle, which the Feature Launcher should not attempt to start.</para>
+            bundle, which the Feature Launcher must not attempt to start.</para>
           </listitem>
           <listitem>
             <para>A configuration cannot be created. If a configuration cannot be created then
@@ -1174,7 +1174,7 @@ fw.waitForStop(0);
         
         <para>Despite the Operation Builders not being Thread Safe the underlying Feature
         Runtime must remain Thread Safe, specifically if two Operation Builders complete
-        at the same time then these calls should be handled sequentially such that there
+        at the same time then these calls must be handled sequentially such that there
         are never partially deployed Features present when installing, updating or removing 
         a Feature.</para>
       </section>
@@ -2243,6 +2243,9 @@ public Map&lt;String,Object&gt; mergeConfiguration(MergeOperationType operation,
             <listitem>
               <para>A Feature Bundle cannot be found by any configured <xref 
                linkend="org.osgi.service.featurelauncher.repository.ArtifactRepository" xrefstyle="hyperlink"/>.
+               The operation must fail immediately with a <code>FeatureRuntimeException</code> thrown
+               to the caller, and the Feature Runtime must make every effort to roll back to the
+               pre-update state.
               </para>
             </listitem>
             <listitem>
