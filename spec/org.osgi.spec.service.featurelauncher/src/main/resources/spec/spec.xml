@@ -1618,8 +1618,8 @@ public Stream&lt;BundleMapping&gt; mergeBundle(MergeOperationType operation,
             </listitem>
           </itemizedlist>
           
-          <para>The result of the merge function is a map of configuration properties that should be used to
-          update the configuration. If the map is <code>null</code> then the configuration should be deleted.</para>
+          <para>The result of the merge function is a map of configuration properties that must be used to
+          update the configuration. If the map is <code>null</code> then the configuration must be deleted.</para>
           
           <para>A simple example of a merge strategy which combines configurations by overlaying each in turn
           and ignoring <code>null</code> configurations could be implemented as follows:</para>
@@ -2026,7 +2026,7 @@ public Map&lt;String,Object&gt; mergeConfiguration(MergeOperationType operation,
           the Installed Feature from the Feature Runtime. This includes the list of
           installed features, and the ownership lists of any Installed Bundles or
           Installed configurations in the Feature Runtime. After removal is complete
-          the <code>ID</code> of the removed feature should not appear anywhere in
+          the <code>ID</code> of the removed feature must not appear anywhere in
           the Feature Runtime.</para>
           
           <para>Installed Bundles and Installed Configurations which have zero
@@ -2091,32 +2091,32 @@ public Map&lt;String,Object&gt; mergeConfiguration(MergeOperationType operation,
           <itemizedlist>
             <listitem>
               <para>The feature being removed is not known to the Feature Runtime. This must
-              not be treated as a failure, and should simply return immediately.</para>
+              not be treated as a failure, and must simply return immediately.</para>
             </listitem>
             <listitem>
               <para>One or more <code>BundleExceptions</code> are thrown during <xref 
                linkend="service.featurelauncher-runtime.bundle.stop" xrefstyle="hyperlink"/>.
-              These exceptions should be logged when they occur, but then ignored.</para>
+              These exceptions should be logged when they occur, but must then be ignored.</para>
             </listitem>
             <listitem>
               <para>One or more <code>BundleExceptions</code> are thrown during <xref 
                linkend="service.featurelauncher-runtime.bundle.removal" xrefstyle="hyperlink"/>.
-              These exceptions should be logged when they occur, with the Feature Runtime 
-              continuing despite the errors. Once the feature removal is complete the
+              These exceptions should be logged when they occur, and the Feature Runtime must
+              continue despite the errors. Once the feature removal is complete the
               failures may be used in creating the <code>FeatureRuntimeException</code>
               that must be thrown by this method.</para>
             </listitem>
             <listitem>
               <para>One or more Installed Configurations are missing from the <xref 
                linkend="org.osgi.service.cm.ConfigurationAdmin" xrefstyle="hyperlink"/> service.
-              These missing configurations should be logged with a warning, but not treated
+              These missing configurations should be logged with a warning, but must not be treated
               as an error.</para>
             </listitem>
             <listitem>
               <para>One or more Installed Configurations cannot be deleted missing from the <xref 
                linkend="org.osgi.service.cm.ConfigurationAdmin" xrefstyle="hyperlink"/> service.
-              These exceptions should be logged when they occur, with the Feature Runtime 
-              continuing despite the errors. Once the feature removal is complete the
+              These exceptions should be logged when they occur, and the Feature Runtime must
+              continue despite the errors. Once the feature removal is complete the
               failures may be used in creating the <code>FeatureRuntimeException</code>
               that must be thrown by this method.</para>
             </listitem>
@@ -2238,7 +2238,7 @@ public Map&lt;String,Object&gt; mergeConfiguration(MergeOperationType operation,
           <itemizedlist>
             <listitem>
               <para>The feature being updated is not known to the Feature Runtime. This must
-              not make any changes and should immediately throw a <code>FeatureRuntimeException</code>.</para>
+              not make any changes and must immediately throw a <code>FeatureRuntimeException</code>.</para>
             </listitem>
             <listitem>
               <para>A Feature Bundle cannot be found by any configured <xref 
@@ -2248,17 +2248,17 @@ public Map&lt;String,Object&gt; mergeConfiguration(MergeOperationType operation,
             <listitem>
               <para>A <code>BundleException</code> is thrown during <xref 
                linkend="service.featurelauncher-runtime.update.bundle.install" xrefstyle="hyperlink"/>.
-               This should result in the imediate failure of the operation,
-               rolling back to the pre-update state, with a <code>FeatureRuntimeException</code> thrown
-               to the caller.
+               The operation must fail immediately with a <code>FeatureRuntimeException</code> thrown
+               to the caller, and the Feature Runtime must make every effort to roll back to the
+               pre-update state.
               </para>
             </listitem>
             <listitem>
               <para>A <code>BundleException</code> is thrown during <xref 
                linkend="service.featurelauncher-runtime.feature.update.start" xrefstyle="hyperlink"/>.
-               This should result in the imediate failure of the operation,
-               rolling back to the pre-update state, with a <code>FeatureRuntimeException</code> thrown
-               to the caller.
+               The operation must fail immediately with a <code>FeatureRuntimeException</code> thrown
+               to the caller, and the Feature Runtime must make every effort to roll back to the
+               pre-update state.
               </para>
             </listitem>
             <listitem>
@@ -2272,9 +2272,9 @@ public Map&lt;String,Object&gt; mergeConfiguration(MergeOperationType operation,
             <listitem>
               <para>A Feature Configuration cannot be created by the <xref 
                linkend="org.osgi.service.cm.ConfigurationAdmin" xrefstyle="hyperlink"/> service.
-               This should result in the imediate failure of the operation,
-               rolling back to the pre-update state, with a <code>FeatureRuntimeException</code> thrown
-               to the caller.
+               The operation must fail immediately with a <code>FeatureRuntimeException</code> thrown
+               to the caller, and the Feature Runtime must make every effort to roll back to the
+               pre-update state.
               </para>
             </listitem>
             <listitem>
@@ -2282,35 +2282,35 @@ public Map&lt;String,Object&gt; mergeConfiguration(MergeOperationType operation,
                linkend="org.osgi.service.featurelauncher.repository.ArtifactRepository" xrefstyle="hyperlink"/>,
                <xref linkend="org.osgi.service.featurelauncher.runtime.RuntimeBundleMerge" xrefstyle="hyperlink"/>
               or <xref linkend="org.osgi.service.featurelauncher.runtime.RuntimeConfigurationMerge"
-               xrefstyle="hyperlink"/>. This should result in the imediate failure of the operation,
-               rolling back to the pre-update state, with a <code>FeatureRuntimeException</code> thrown
-               to the caller.
+               xrefstyle="hyperlink"/>. The operation must fail immediately with a
+               <code>FeatureRuntimeException</code> thrown to the caller, and the Feature Runtime must
+               make every effort to roll back to the pre-update state.
                </para>
             </listitem>
             <listitem>
               <para>One or more <code>BundleExceptions</code> are thrown during <xref 
                linkend="service.featurelauncher-runtime.update.stop" xrefstyle="hyperlink"/>.
-              These exceptions should be logged when they occur, but then ignored.</para>
+              These exceptions should be logged when they occur, but must then be ignored.</para>
             </listitem>
             <listitem>
               <para>One or more <code>BundleExceptions</code> are thrown during <xref 
                linkend="service.featurelauncher-runtime.update.removal" xrefstyle="hyperlink"/>.
-              These exceptions should be logged when they occur, with the Feature Runtime 
-              continuing despite the errors. Once the feature removal is complete the
+              These exceptions should be logged when they occur, and the Feature Runtime must
+              continue despite the errors. Once the feature removal is complete the
               failures may be used in creating the <code>FeatureRuntimeException</code>
               that must be thrown by this method.</para>
             </listitem>
             <listitem>
               <para>One or more Installed Configurations are missing from the <xref 
                linkend="org.osgi.service.cm.ConfigurationAdmin" xrefstyle="hyperlink"/> service.
-              These missing configurations should be logged with a warning, but not treated
+              These missing configurations should be logged with a warning, but must not be treated
               as an error.</para>
             </listitem>
             <listitem>
               <para>One or more Installed Configurations cannot be deleted missing from the <xref 
                linkend="org.osgi.service.cm.ConfigurationAdmin" xrefstyle="hyperlink"/> service.
-              These exceptions should be logged when they occur, with the Feature Runtime 
-              continuing despite the errors. Once the feature removal is complete the
+              These exceptions should be logged when they occur, and the Feature Runtime must
+              continue despite the errors. Once the feature removal is complete the
               failures may be used in creating the <code>FeatureRuntimeException</code>
               that must be thrown by this method.</para>
             </listitem>
