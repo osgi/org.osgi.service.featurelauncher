@@ -290,8 +290,9 @@
         linkend="org.osgi.service.featurelauncher.repository.ArtifactRepositoryFactory.createRepository-URI-Map-"
         xrefstyle="hyperlink"/> method, passing in the uri to the root of the repository.
         A <code>NullPointerException</code> must be thrown if the uri is <code>null</code>
-        and an <code>IllegalArgumentException</code> must be thrown if the uri does not
-        use the <code>http</code> or <code>https</code> scheme.</para>
+        and an <code>IllegalArgumentException</code> must be thrown if the uri scheme is not
+        supported by the implementation. All implementations must support the <code>http</code>,
+        <code>https</code> and <code>file</code> schemes.</para>
         
         <para>In addition to the repository <code>URI</code> the user may pass
         configuration properties in a <code>Map</code>. Implementations may support custom
@@ -366,7 +367,21 @@
     runtime, for ongoing management of an OSGi runtime, and for merging features. 
     There are many concepts that apply across more than one of these scenarios,
     and so they are described here.</para>
-    
+
+    <section xml:id="service.featurelauncher-errors">
+      <title>Reporting errors</title>
+
+      <para>Errors detected while launching a framework using the Feature Launcher
+      are reported by throwing a <xref linkend="org.osgi.service.featurelauncher.LaunchException"
+      xrefstyle="hyperlink"/>. Errors detected while installing, updating or removing a
+      Feature using the Feature Runtime are reported by throwing a <xref
+      linkend="org.osgi.service.featurelauncher.runtime.FeatureRuntimeException"
+      xrefstyle="hyperlink"/>. Where a section of this specification requires an
+      operation to fail, or to be treated as an error, this is the exception that
+      must be thrown, with the underlying exception set as its <code>cause</code>
+      where there is one.</para>
+    </section>
+
     <section xml:id="service.featurelauncher-variable.overrides">
       <title>Overriding Feature variables</title>
         
@@ -379,9 +394,9 @@
       by the <xref linkend="service.feature"/></para>
         
       <para>If a Feature declares a variable with no default value then this variable
-      <emphasis>must</emphasis> be provided. If no value is provided then the method
-      must fail to launch by throwing a <xref linkend="org.osgi.service.featurelauncher.LaunchException"
-      xrefstyle="hyperlink"/></para>
+      <emphasis>must</emphasis> be provided. If no value is provided then the operation
+      must fail, as described in <xref linkend="service.featurelauncher-errors"
+      xrefstyle="hyperlink"/>.</para>
     </section>
     
     <section xml:id="service.featurelauncher-start.levels">
@@ -407,8 +422,8 @@
        xrefstyle="hyperlink"/> which is of type integer and has a value between
       <code>1</code> and <code>Integer.MAX_VALUE</code> inclusive. If the property does 
       not exist then the default start level will be used. If the property does 
-      exist and is not a suitable integer then launching must fail with a <xref 
-        linkend="org.osgi.service.featurelauncher.LaunchException" xrefstyle="hyperlink"/>.
+      exist and is not a suitable integer then the operation must fail, as described
+      in <xref linkend="service.featurelauncher-errors" xrefstyle="hyperlink"/>.
       </para>
         
       <para>Setting the default start level for the bundles, and the minimum start
@@ -424,31 +439,32 @@
         
       <para>Setting the default start level for bundles installed by the feature is
       achieved using the <code>defaultStartLevel</code> property of the <code>JSON</code>
-      extension. This must be an integer greater than zero and less than 
+      extension. This must be an integer greater than zero and not greater than
       <code>Integer.MAX_VALUE</code>. If the <code>defaultStartLevel</code> property is not
       present then the current framework start level is used as the default start level for newly
       installed bundles, or <code>1</code> if the 
       current framework start level is <code>0</code>. If the value of <code>defaultStartLevel</code>
-      is not valid then a <xref 
-          linkend="org.osgi.service.featurelauncher.LaunchException" xrefstyle="hyperlink"/>
-      must be thrown when attempting to use the feature.</para>
+      is not valid then the operation must fail, as described in <xref
+          linkend="service.featurelauncher-errors" xrefstyle="hyperlink"/>,
+      when attempting to use the feature.</para>
         
       <para>The minimum start level required to start the feature 
       can be set using the <code>minimumStartLevel</code> property of the <code>JSON</code>
-      extension. This must be an integer greater than zero and less than <code>Integer.MAX_INT</code>.
+      extension. This must be an integer greater than zero and not greater than <code>Integer.MAX_VALUE</code>.
       If the <code>minimumStartLevel</code> property is not set then the minimum required start level
       is set to the current framework start level, meaning that the framework start level will not
       change when the feature is started.
-      If the value of the <code>minimumStartLevel</code> property is not valid then a <xref 
-        linkend="org.osgi.service.featurelauncher.LaunchException" xrefstyle="hyperlink"/>
-      must be thrown when attempting to use the feature.</para>
+      If the value of the <code>minimumStartLevel</code> property is not valid then the
+      operation must fail, as described in <xref
+        linkend="service.featurelauncher-errors" xrefstyle="hyperlink"/>,
+      when attempting to use the feature.</para>
       
       <para>Finally the <code>version</code> property defines the version of the extension
       schema being used. This can be used by the implementation to determine whether the 
       Feature is targeting a newer version of the specification. If the version is missing,
-      or not understood by the implementation then a <xref 
-        linkend="org.osgi.service.featurelauncher.LaunchException" xrefstyle="hyperlink"/>
-      must be thrown when attempting to use the feature.</para>
+      or not understood by the implementation then the operation must fail, as
+      described in <xref linkend="service.featurelauncher-errors" xrefstyle="hyperlink"/>,
+      when attempting to use the feature.</para>
     </section>
     
     <section xml:id="service.featurelauncher-feature.decoration">
@@ -476,7 +492,8 @@
        linkend="org.osgi.service.featurelauncher.decorator.AbandonOperationException"
        xrefstyle="hyperlink"/>. This will cause the operation to be immediately halted, but must be
        treated as an error when logging. Abandoned operations must result in
-       an exception being thrown to the caller who requested the operation.</para>
+       an exception being thrown to the caller who requested the operation, as
+       described in <xref linkend="service.featurelauncher-errors" xrefstyle="hyperlink"/>.</para>
       
       <section>
         <title>Building decorated features</title>
@@ -723,7 +740,7 @@
         The value of each property is used as the value of the Framework Launch Property,
         and must be a scalar type, that is a <code>JSON</code> <code>string</code>,
         <code>number</code> or <code>boolean</code>. If the value is a different <code>JSON</code>
-        type then this must be treated as an error.</para>
+        type then the launch must fail with a <code>LaunchException</code>.</para>
         
         <para>
         If the <code>JSON</code> property starts with a single underscore then it may be
@@ -1194,14 +1211,20 @@ fw.waitForStop(0);
          xrefstyle="hyperlink"/> entry for each installed Feature, in the order
         that they were installed, and may be empty if no Features have been 
         installed. If the framework was started using a Feature Launcher from the
-        same implementation as the Feature Runtime then the Feature Runtime may 
-        choose to represent the launched Feature in the snapshot list. If the launched 
-        Feature is included in the snapshot list then it must set <xref
+        same implementation as the Feature Runtime, and both implement the same major
+        version of this specification, then the Feature Runtime must represent the
+        launched Feature in the snapshot list. This applies across minor versions, so a
+        Feature Runtime that implements version 1.1 must represent a Feature launched by
+        a version 1.0 Feature Launcher, but it is not required to represent a Feature
+        launched by an implementation of a different major version. In all other cases
+        the Feature Runtime may choose to represent the launched Feature in the snapshot
+        list. If the launched Feature is included in the snapshot list then it must set
+        <xref
          linkend="org.osgi.service.featurelauncher.runtime.InstalledFeature.isInitialLaunch--" 
          xrefstyle="hyperlink"/> to <code>true</code>. Launch features cannot be 
          removed or updated by the Feature Runtime, and any attempt to do so must
          throw a <xref linkend="org.osgi.service.featurelauncher.runtime.FeatureRuntimeException"
-          xrefstyle="hyperlink"/></para>
+          xrefstyle="hyperlink"/>.</para>
         
         <para>Each Installed Feature provides:</para>
         
@@ -1934,11 +1957,9 @@ public Map&lt;String,Object&gt; mergeConfiguration(MergeOperationType operation,
           
           <para>The Feature Runtime must then identify the next lowest start level referenced
           in the Feature and repeat this process until all bundles have been persistently
-          started. Once this process is complete then the framework start level must be
-          increased to the minimum start level required by the Feature, or returned to the
-          original framework start level if this is higher and was decreased as part of
-          <xref linkend="service.featurelauncher-runtime.merge.strategies.bundles"
-           xrefstyle="hyperlink"/>.</para>
+          started. Once this process is complete then the framework start level must be at
+          least the minimum start level required by the Feature, and must be no lower than it
+          was before the operation began.</para>
           
         </section>
         
@@ -2309,7 +2330,34 @@ public Map&lt;String,Object&gt; mergeConfiguration(MergeOperationType operation,
     <title>Capabilities</title>
 
     <para>The Feature Launcher must provide the following capabilities.</para>
-    
+
+    <section>
+      <title>osgi.implementation Capability</title>
+
+      <para>The Feature Launcher implementation bundle must provide the <link
+      linkend="service.namespaces-osgi.implementation.namespace"><code>osgi.implementation</code></link>
+      capability with the name <xref
+      linkend="org.osgi.service.featurelauncher.FeatureLauncherConstants.FEATURE_LAUNCHER_IMPLEMENTATION"
+      xrefstyle="hyperlink"/>. This capability can be used by provisioning
+      tools and during resolution to ensure that a Feature Launcher
+      implementation is present. The capability must also declare a uses
+      constraint for the <code>org.osgi.service.featurelauncher</code> package
+      and provide the version of this specification:</para>
+
+      <programlisting>Provide-Capability: osgi.implementation;
+ osgi.implementation="osgi.featurelauncher";
+ uses:="org.osgi.service.featurelauncher";
+ version:Version="1.0"</programlisting>
+
+      <para>The <xref
+      linkend="org.osgi.service.featurelauncher.annotation.RequireFeatureLauncher"
+      xrefstyle="hyperlink"/> annotation can be used to require this
+      capability.</para>
+
+      <para>This capability must follow the rules defined for the <xref
+      linkend="service.namespaces-osgi.implementation.namespace"/>.</para>
+    </section>
+
     <section>
       <title>osgi.service Capability</title>
 
@@ -2327,8 +2375,25 @@ public Map&lt;String,Object&gt; mergeConfiguration(MergeOperationType operation,
  objectClass:List&lt;String&gt;="org.osgi.service.featurelauncher.repository.ArtifactRepositoryFactory";
  uses:="org.osgi.service.featurelauncher.repository"</programlisting>
 
+      <para>The <xref linkend="org.osgi.service.featurelauncher.FeatureLauncher"
+      xrefstyle="hyperlink"/> is not an OSGi service. It is obtained using the
+      Java ServiceLoader API, and so implementations should not provide an
+      <code>osgi.service</code> capability for it.</para>
+
       <para>This capability must follow the rules defined for the <xref
       linkend="service.namespaces-osgi.service.namespace"/>.</para>
+    </section>
+
+    <section>
+      <title>osgi.serviceloader Capability</title>
+
+      <para>The <xref linkend="org.osgi.service.featurelauncher.FeatureLauncher"
+      xrefstyle="hyperlink"/> is intended for use outside of an OSGi framework,
+      where it is found using the Java ServiceLoader API. All of the other
+      service provider interfaces defined by this specification are available
+      inside an OSGi framework as OSGi services. There is therefore no
+      requirement for an implementation to provide, or to require, capabilities
+      in the <code>osgi.serviceloader</code> namespace.</para>
     </section>
   </section>
 
