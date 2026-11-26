@@ -51,7 +51,7 @@ public final class FeatureLauncherConstants {
 	 * configurations from {@link FeatureConfiguration} definitions.
 	 * <p>
 	 * The value must be a {@link Long} indicating the number of milliseconds
-	 * that the implementation should wait to be able to create configurations
+	 * that the implementation may wait to be able to create configurations
 	 * for the Feature. The default is <code>5000</code>.
 	 * <p>
 	 * A value of <code>0</code> means that the configurations must be created
@@ -60,7 +60,7 @@ public final class FeatureLauncherConstants {
 	 * outside the feature.
 	 * <p>
 	 * A value of <code>-1</code> means that the implementation must not wait to
-	 * create configurations and should return control to the user as soon as
+	 * create configurations and must return control to the user as soon as
 	 * the bundles are started, even if the configurations have not yet been
 	 * created.
 	 */
