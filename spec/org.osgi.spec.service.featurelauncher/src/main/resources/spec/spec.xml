@@ -2264,9 +2264,9 @@ public Map&lt;String,Object&gt; mergeConfiguration(MergeOperationType operation,
             <listitem>
               <para>A bundle of a complete Feature fails to resolve during <xref
                linkend="service.featurelauncher-runtime.feature.update.start" xrefstyle="hyperlink"/>.
-               This should result in the immediate failure of the operation,
-               rolling back to the pre-update state, with a <code>FeatureRuntimeException</code> thrown
-               to the caller.
+               The operation must fail immediately with a <code>FeatureRuntimeException</code> thrown
+               to the caller, and the Feature Runtime must make every effort to roll back to the
+               pre-update state.
               </para>
             </listitem>
             <listitem>
