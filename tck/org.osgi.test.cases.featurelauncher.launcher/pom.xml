@@ -1,0 +1,100 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.osgi.tck</groupId>
+		<artifactId>org.osgi.tck.service.featurelauncher</artifactId>
+		<version>${revision}</version>
+	</parent>
+	<groupId>org.osgi.tck</groupId>
+	<artifactId>org.osgi.test.cases.featurelauncher.launcher</artifactId>
+
+	<description>
+		Tests the Feature Launcher through its command line, as a separate
+		process. The executable JAR is copied from the Maven coordinates in the
+		featurelauncher.groupId, featurelauncher.artifactId,
+		featurelauncher.version and featurelauncher.classifier properties, which
+		can be overridden to test another implementation. To use a JAR that is
+		not in a Maven repository set featurelauncher.jar to its path and skip the
+		copy with -Dfeaturelauncher.copy.skip=true.
+	</description>
+
+	<properties>
+		<maven.compiler.release>17</maven.compiler.release>
+		<featurelauncher.groupId>org.eclipse.osgi-technology.featurelauncher.launch</featurelauncher.groupId>
+		<featurelauncher.artifactId>all.maven</featurelauncher.artifactId>
+		<featurelauncher.version>1.0.0-SNAPSHOT</featurelauncher.version>
+		<!-- Empty means no classifier -->
+		<featurelauncher.classifier></featurelauncher.classifier>
+		<featurelauncher.copy.skip>false</featurelauncher.copy.skip>
+		<featurelauncher.jar>${project.build.directory}/launcher/launcher.jar</featurelauncher.jar>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!-- The framework the launched Feature runs in, and the OSGi API the test bundle compiles against -->
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.apache.felix.framework</artifactId>
+			<version>${org.apache.felix.framework.version}</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-launcher-jar</id>
+						<phase>generate-test-resources</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<skip>${featurelauncher.copy.skip}</skip>
+							<artifactItems>
+								<artifactItem>
+									<groupId>${featurelauncher.groupId}</groupId>
+									<artifactId>${featurelauncher.artifactId}</artifactId>
+									<version>${featurelauncher.version}</version>
+									<classifier>${featurelauncher.classifier}</classifier>
+									<outputDirectory>${project.build.directory}/launcher</outputDirectory>
+									<destFileName>launcher.jar</destFileName>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<!-- Report the display names, which carry the specification section numbers -->
+					<statelessTestsetReporter implementation="org.apache.maven.plugin.surefire.extensions.junit5.JUnit5Xml30StatelessReporter">
+						<usePhrasedTestSuiteClassName>true</usePhrasedTestSuiteClassName>
+						<usePhrasedTestCaseClassName>true</usePhrasedTestCaseClassName>
+						<usePhrasedTestCaseMethodName>true</usePhrasedTestCaseMethodName>
+					</statelessTestsetReporter>
+					<systemPropertyVariables>
+						<featurelauncher.jar>${featurelauncher.jar}</featurelauncher.jar>
+						<framework.version>${org.apache.felix.framework.version}</framework.version>
+					</systemPropertyVariables>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
