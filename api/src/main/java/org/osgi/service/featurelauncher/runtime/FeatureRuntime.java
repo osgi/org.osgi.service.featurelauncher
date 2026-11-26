@@ -25,7 +25,6 @@ import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.feature.Feature;
 import org.osgi.service.feature.FeatureExtension;
 import org.osgi.service.feature.ID;
-import org.osgi.service.featurelauncher.LaunchException;
 import org.osgi.service.featurelauncher.decorator.FeatureDecorator;
 import org.osgi.service.featurelauncher.decorator.FeatureExtensionHandler;
 import org.osgi.service.featurelauncher.repository.ArtifactRepository;
@@ -56,10 +55,11 @@ public interface FeatureRuntime extends ArtifactRepositoryFactory {
 	/**
 	 * Install a feature into the runtime
 	 * 
-	 * @param feature the feature to launch
-	 * @return An {@link OperationBuilder} that can be used to set up the
-	 *         installation of this feature
-	 * @throws LaunchException if installation fails
+	 * @param feature the feature to install
+	 * @return An {@link InstallOperationBuilder} that can be used to set up the
+	 *         installation of this feature. Installation failures are reported
+	 *         by {@link OperationBuilder#complete()} using a
+	 *         {@link FeatureRuntimeException}
 	 */
 	InstallOperationBuilder install(Feature feature);
 
@@ -67,9 +67,10 @@ public interface FeatureRuntime extends ArtifactRepositoryFactory {
 	 * Install a feature into the runtime based on the supplied feature JSON
 	 * 
 	 * @param jsonReader a {@link Reader} for the input Feature JSON
-	 * @return An installedFeature representing the results of installing this
-	 *         feature
-	 * @throws LaunchException if installation fails
+	 * @return An {@link InstallOperationBuilder} that can be used to set up the
+	 *         installation of this feature. Installation failures are reported
+	 *         by {@link OperationBuilder#complete()} using a
+	 *         {@link FeatureRuntimeException}
 	 */
 	InstallOperationBuilder install(Reader jsonReader);
 
@@ -92,9 +93,11 @@ public interface FeatureRuntime extends ArtifactRepositoryFactory {
 	 * Update a feature in the runtime
 	 * 
 	 * @param featureId the id of the feature to update
-	 * @param feature the feature to launch
-	 * @return An installedFeature representing the results of updating this
-	 *         feature
+	 * @param feature the feature to replace the existing feature with
+	 * @return An {@link UpdateOperationBuilder} that can be used to set up the
+	 *         update of this feature. Update failures are reported by
+	 *         {@link OperationBuilder#complete()} using a
+	 *         {@link FeatureRuntimeException}
 	 */
 	UpdateOperationBuilder update(ID featureId, Feature feature);
 
@@ -103,8 +106,10 @@ public interface FeatureRuntime extends ArtifactRepositoryFactory {
 	 * 
 	 * @param featureId the id of the feature to update
 	 * @param jsonReader a {@link Reader} for the input Feature JSON
-	 * @return An installedFeature representing the results of updating this
-	 *         feature
+	 * @return An {@link UpdateOperationBuilder} that can be used to set up the
+	 *         update of this feature. Update failures are reported by
+	 *         {@link OperationBuilder#complete()} using a
+	 *         {@link FeatureRuntimeException}
 	 */
 	UpdateOperationBuilder update(ID featureId, Reader jsonReader);
 
@@ -256,7 +261,7 @@ public interface FeatureRuntime extends ArtifactRepositoryFactory {
 
 	/**
 	 * The {@link OperationBuilder} for a
-	 * {@link FeatureRuntime#install(Feature)} operation. Instances are not
+	 * {@link FeatureRuntime#update(ID, Feature)} operation. Instances are not
 	 * thread safe and must not be shared.
 	 */
 	public interface UpdateOperationBuilder
