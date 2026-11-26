@@ -887,7 +887,7 @@ fw.waitForStop(0);
 
                 <entry><para>A&#160;class&#160;name[,&lt;class&#160;name&gt;]</para></entry>
 
-                <entry><para>Provides the name of a decorator class that should be used when launching
+                <entry><para>Provides the name of a decorator class that must be used when launching
                 the feature. The decorator class must be public, available on the classpath, and have a
                 public zero-argument constructor. This property may be repeated to add more than one 
                 decorator.</para></entry>
@@ -900,7 +900,7 @@ fw.waitForStop(0);
                 &lt;class&#160;name&gt;[,&lt;extension&#160;name&gt;=
                 &lt;class&#160;name&gt;]</para></entry>
 
-                <entry><para>Provides the name of an extension, and the extension handler class that should
+                <entry><para>Provides the name of an extension, and the extension handler class that must
                 be used to handle the extension when launching the feature. The extension handler class must 
                 be public, available on the classpath, and have a public zero-argument constructor. This 
                 property may be repeated to add more than one extension handler.</para></entry>
@@ -911,7 +911,7 @@ fw.waitForStop(0);
 
                 <entry><para>key=value[,key=value]</para></entry>
 
-                <entry><para>Provides one or more launch properties that should be passed to the
+                <entry><para>Provides one or more launch properties that must be passed to the
                 framework when it is launched.</para></entry>
               </row>
               
@@ -920,7 +920,7 @@ fw.waitForStop(0);
 
                 <entry><para>key=value[,key=value]</para></entry>
 
-                <entry><para>Provides one or more variables that should be used to set or
+                <entry><para>Provides one or more variables that must be used to set or
                 override variables defined in the feature.</para></entry>
               </row>
 
@@ -929,12 +929,29 @@ fw.waitForStop(0);
 
                 <entry><para>key=value[,key=value]</para></entry>
 
-                <entry><para>Provides one or more configuration properties that should be 
+                <entry><para>Provides one or more configuration properties that must be
                 used to control implementation specific behaviour.</para></entry>
               </row>
             </tbody>
           </tgroup>
         </table>
+        
+        <para>The command must launch the Feature in the same way as the <code>launchFramework</code> method of
+        the Launch Builder, and then wait until the launched framework has stopped, as if by calling
+        <code>waitForStop</code>. If the framework stops normally the command must exit with a status of <code>0</code>.
+        If the launch fails with a <xref linkend="org.osgi.service.featurelauncher.LaunchException"
+        xrefstyle="hyperlink"/>, or the command line arguments are not valid, then the command must write a message
+        describing the failure to the standard error stream and exit with a non-zero status. It is an error to
+        provide both the <code>-f</code> option and the <code>&lt;feature json&gt;</code> argument.</para>
+        
+        <para>Options which accept <code>key=value</code> pairs may be repeated, and each occurrence may contain
+        more than one comma separated pair. If the same key appears more than once then the last value takes
+        precedence. A key or value which needs to contain a comma, an equals sign or a backslash must escape
+        the character using a preceding backslash. All values are supplied as text, and the implementation must
+        convert each value to the type that is expected for it. This is the declared type of a Feature variable,
+        or the documented type of a repository or configuration property, for example a <code>Boolean</code> for
+        the repository <code>snapshot</code> and <code>release</code> properties and a <code>Long</code> for
+        <code>configuration.timeout</code>. If a value cannot be converted then the arguments are not valid.</para>
         
         <para>If implementations wish to support any additional options these must only use long-form option
         names starting with <code>--impl-</code> to ensure that users know the launch command is not portable,
