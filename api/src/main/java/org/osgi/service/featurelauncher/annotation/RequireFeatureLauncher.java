@@ -29,8 +29,8 @@ import org.osgi.namespace.implementation.ImplementationNamespace;
 import org.osgi.service.featurelauncher.FeatureLauncherConstants;
 
 /**
- * This annotation can be used to require the Feature implementation. It can be
- * used directly, or as a meta-annotation.
+ * This annotation can be used to require a Feature Launcher implementation. It
+ * can be used directly, or as a meta-annotation.
  * 
  * @author $Id$
  */
@@ -42,6 +42,6 @@ import org.osgi.service.featurelauncher.FeatureLauncherConstants;
 @Requirement(namespace = ImplementationNamespace.IMPLEMENTATION_NAMESPACE, //
 		name = FeatureLauncherConstants.FEATURE_LAUNCHER_IMPLEMENTATION, //
 		version = FeatureLauncherConstants.FEATURE_LAUNCHER_SPECIFICATION_VERSION)
-public @interface RequireFeatureLauncherService {
+public @interface RequireFeatureLauncher {
 	// This is a marker annotation.
 }

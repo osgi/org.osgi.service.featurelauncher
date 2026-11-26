@@ -35,12 +35,13 @@ public final class FeatureLauncherConstants {
 	}
 
 	/**
-	 * The name of the implementation capability for the Feature specification.
+	 * The name of the implementation capability for the Feature Launcher
+	 * specification.
 	 */
 	public static final String	FEATURE_LAUNCHER_IMPLEMENTATION					= "osgi.featurelauncher";
 
 	/**
-	 * The version of the implementation capability for the Feature
+	 * The version of the implementation capability for the Feature Launcher
 	 * specification.
 	 */
 	public static final String	FEATURE_LAUNCHER_SPECIFICATION_VERSION			= "1.0";
