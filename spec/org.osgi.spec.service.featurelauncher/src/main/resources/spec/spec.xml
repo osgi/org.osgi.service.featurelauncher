@@ -742,6 +742,12 @@
         <code>number</code> or <code>boolean</code>. If the value is a different <code>JSON</code>
         type then the launch must fail with a <code>LaunchException</code>.</para>
         
+        <para>A <code>JSON</code> <code>string</code> is used as the value of the Framework Launch Property
+        unchanged. A <code>JSON</code> <code>boolean</code> is converted to the text <code>true</code> or
+        <code>false</code>, and a <code>JSON</code> <code>number</code> is converted to its text exactly as it
+        is written in the <code>JSON</code>, so <code>1.0</code> is <code>"1.0"</code> and <code>5000</code>
+        is <code>"5000"</code>.</para>
+        
         <para>
         If the <code>JSON</code> property starts with a single underscore then it may be
         used for implementation specific behaviour, with the prefix <code>_osgi</code>
@@ -1480,7 +1486,8 @@ fw.waitForStop(0);
           <title>Merging Bundles</title>
           <para>Features may define bundles to be installed by including Feature Bundle
           entries. If two or more Features include Feature Bundles which have IDs with
-          the same group id and artifact id, but which are not the same, then this 
+          the same group id, artifact id, type and classifier, but which are not the same
+          (that is, they have different versions), then this
           situation requires a merge to resolve the possible conflict. Determining
           whether two IDs are the same is accomplished by checking whether they
           return equal strings from <code>toString()</code>.</para>
@@ -1525,7 +1532,8 @@ fw.waitForStop(0);
             </listitem>
             <listitem>
               <para>A <code>Collection</code> of Installed Bundles representing the currently installed bundles
-              which have an overlapping <code>groupId</code> and <code>artifactId</code>. Note that
+              which have an overlapping <code>groupId</code>, <code>artifactId</code>, <code>type</code>
+              and <code>classifier</code>. Note that
               in the case of an <code>UPDATE</code> or <code>REMOVE</code> operation the Feature being updated
               or removed will not be present in the collection of owning features for any of the Installed Bundles.</para>
             </listitem>
