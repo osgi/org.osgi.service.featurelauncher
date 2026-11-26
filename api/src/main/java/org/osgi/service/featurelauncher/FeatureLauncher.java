@@ -105,11 +105,14 @@ public interface FeatureLauncher extends ArtifactRepositoryFactory {
 
 		/**
 		 * Configure this {@link LaunchBuilder} with the supplied Framework
-		 * Launch Properties.
+		 * Launch Properties. These take precedence over any Framework Launch
+		 * Properties defined by the feature.
 		 * 
 		 * @param frameworkProps the launch properties to use when starting the
 		 *            framework. All framework properties must have
-		 *            <code>String</code> keys and <code>String</code> values.
+		 *            <code>String</code> keys. The values must be
+		 *            <code>String</code>, or <code>null</code> to remove a
+		 *            property that is defined by the feature.
 		 * @return <code>this</code>
 		 * @throws IllegalStateException if the builder has been launched
 		 */
