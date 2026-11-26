@@ -22,7 +22,6 @@ import java.nio.file.Path;
 import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
-import org.osgi.service.featurelauncher.FeatureLauncherConstants;
 
 /**
  * A {@link ArtifactRepositoryFactory} is used to create implementations of
@@ -54,11 +53,12 @@ public interface ArtifactRepositoryFactory {
 	 *            <code>https</code> and <code>file</code> schemes must be
 	 *            supported by all implementations.
 	 * @param props the configuration properties for the remote repository. See
-	 *            {@link FeatureLauncherConstants} for standard property names
-	 * @return an {@link ArtifactRepository} using the local file system
+	 *            {@link ArtifactRepositoryConstants} for standard property names
+	 * @return an {@link ArtifactRepository} for the repository at the
+	 *         supplied URI
 	 * @throws IllegalArgumentException if the uri scheme is not supported by
 	 *             this implementation
-	 * @throws NullPointerException if the path is <code>null</code>
+	 * @throws NullPointerException if the uri is <code>null</code>
 	 */
 	ArtifactRepository createRepository(URI uri, Map<String,Object> props);
 

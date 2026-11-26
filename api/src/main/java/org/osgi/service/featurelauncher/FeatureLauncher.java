@@ -43,8 +43,10 @@ public interface FeatureLauncher extends ArtifactRepositoryFactory {
 	 * Begin launching a framework instance based on the supplied feature
 	 * 
 	 * @param feature the feature to launch
-	 * @return A running framework instance.
-	 * @throws LaunchException
+	 * @return A {@link LaunchBuilder} for configuring the launch of a framework
+	 *         containing this feature. Launch failures are reported by
+	 *         {@link LaunchBuilder#launchFramework()} using a
+	 *         {@link LaunchException}
 	 */
 	LaunchBuilder launch(Feature feature);
 
@@ -52,8 +54,10 @@ public interface FeatureLauncher extends ArtifactRepositoryFactory {
 	 * Begin launching a framework instance based on the supplied feature JSON
 	 * 
 	 * @param jsonReader a {@link Reader} for the input Feature JSON
-	 * @return A running framework instance.
-	 * @throws LaunchException
+	 * @return A {@link LaunchBuilder} for configuring the launch of a framework
+	 *         containing this feature. Launch failures are reported by
+	 *         {@link LaunchBuilder#launchFramework()} using a
+	 *         {@link LaunchException}
 	 */
 	LaunchBuilder launch(Reader jsonReader);
 
